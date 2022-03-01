@@ -9,8 +9,8 @@ public class PlayerController : MonoBehaviour
 {
     // インスペクターで変更可能
     public GroundCheck ground; //接地判定
-    public float jumpForce = 22f;       // ジャンプ時に加える力
-	public float jumpThreshold = 1f;    // ジャンプ中か判定するための閾値
+    public float jumpForce = 1000f;       // ジャンプ時に加える力
+	public float jumpThreshold = 22f;    // ジャンプ中か判定するための閾値
 	public float runForce = 1.5f;       // 走り始めに加える力
 	public float runSpeed = 0.5f;       // 走っている間の速度
 	public float runThreshold = 2.2f;   // 速度切り替え判定のための閾値
@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     private Animator anim = null;
     private Rigidbody2D rb = null;
 
+
+	private int key = 0;                 // 左右の入力管理
     private string state;                // プレイヤーの状態管理
 	private string prevState;            // 前の状態を保存
 	private float stateEffect = 1;       // 状態に応じて横移動速度を変えるための係数
@@ -44,24 +46,30 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     void FixedUpdate(){
+		GetInputKey ();
         ChangeState();
 		ChangeAnimation();
 		Move();
     }
 
+	void GetInputKey(){
+		key = 0;
+		if (Input.GetKey (KeyCode.RightArrow)||Input.GetKey (KeyCode.D))
+			key = 1;
+		if (Input.GetKey (KeyCode.LeftArrow)||Input.GetKey (KeyCode.A))
+			key = -1;
+	}
+
     void ChangeState(){
 		// 接地判定受け取り
         isGround = ground.IsGround();
 
-        // 入力方向受け取り
-        horizontalKey = Input.GetAxis("Horizontal");
-        verticalKey = Input.GetAxis("Vertical");
- 
 		// 接地している場合
 		if (isGround) {
 			// 移動中
-			if (horizontalKey != 0) {
+			if (key != 0) {
 				state = "RUN";
+				transform.localScale = new Vector3 (key, 1, 1);
 			//待機中
 			} else {
 				state = "IDLE";
@@ -71,49 +79,52 @@ public class PlayerController : MonoBehaviour
 			// 上昇中
 			if(rb.velocity.y > 0){
 				state = "JUMP";
+				if(key != 0){
+					transform.localScale = new Vector3 (key, 1, 1);
+				}
 			// 下降中
 			} else if(rb.velocity.y < 0) {
 				state = "FALL";
+				if(key != 0){
+					transform.localScale = new Vector3 (key, 1, 1);
+				}
 			}
 		}
 	}
 
     void ChangeAnimation(){
         if (prevState != state) {
+			Debug.Log(state);
 			switch (state) {
-			case "JUMP":
-				// anim.SetBool ("isFall", true);
-				// anim.SetBool ("isJump", false);
-				anim.SetBool ("run_flag", false);
-				// anim.SetBool ("isIdle", false);
-				stateEffect = 0.5f;
-				break;
-			case "FALL":
-				// anim.SetBool ("isFall", true);
-				// anim.SetBool ("isJump", false);
-				anim.SetBool ("run_flag", false);
-				// anim.SetBool ("isIdle", false);
-				stateEffect = 0.5f;
-				break;
-			case "RUN":
-				anim.SetBool ("run_flag", true);
-				// anim.SetBool ("isFall", false);
-				// anim.SetBool ("isJump", false);
-				// anim.SetBool ("isIdle", false);
-				stateEffect = 1f;
-				
-                if(Input.GetAxis("Horizontal") > 0){
-                    transform.localScale = new Vector3 (Input.GetAxis("Horizontal"), 1, 1); // 向きに応じてキャラクターのspriteを反転
-                }
-				
-				break;
-			default:
-				// // anim.SetBool ("isIdle", true);
-				// anim.SetBool ("isFall", false);
-				anim.SetBool ("run_flag", false);
-				// anim.SetBool ("isJump", false);
-				stateEffect = 1f;
-				break;
+				case "JUMP":
+					// anim.SetBool ("isFall", true);
+					// anim.SetBool ("isJump", false);
+					anim.SetBool ("run_flag", false);
+					// anim.SetBool ("isIdle", false);
+					stateEffect = 0.5f;
+					break;
+				case "FALL":
+					// anim.SetBool ("isFall", true);
+					// anim.SetBool ("isJump", false);
+					anim.SetBool ("run_flag", false);
+					// anim.SetBool ("isIdle", false);
+					stateEffect = 0.5f;
+					break;
+				case "RUN":
+					anim.SetBool ("run_flag", true);
+					// anim.SetBool ("isFall", false);
+					// anim.SetBool ("isJump", false);
+					// anim.SetBool ("isIdle", false);
+					stateEffect = 1f;
+					
+					break;
+				default:
+					// // anim.SetBool ("isIdle", true);
+					// anim.SetBool ("isFall", false);
+					anim.SetBool ("run_flag", false);
+					// anim.SetBool ("isJump", false);
+					stateEffect = 1f;
+					break;
 			}
 			// 状態の変更を判定するために状態を保存しておく
 			prevState = state;
@@ -121,20 +132,32 @@ public class PlayerController : MonoBehaviour
     }
 
     void Move(){
-		// 設置している時にSpaceキー押下でジャンプ
+		// 接地してる時にSpaceキー押下でジャンプ
+		float speedX = Mathf.Abs (this.rb.velocity.x);
+
 		if (isGround) {
-			if (verticalKey < 0) {
+			if (Input.GetKeyDown(KeyCode.Space)) {
+				// // 以下を追加するとジャンプ中にも方向転換可能に
+				// if(key != 0){
+				// 	speedX = Mathf.Abs (this.rb.velocity.x);
+				// 	if (speedX < this.runThreshold) {
+				// 		this.rb.AddForce (transform.right * key * this.runForce * stateEffect);
+				// 	} else {
+				// 		this.transform.position += new Vector3 (runSpeed * Time.deltaTime * key * stateEffect, 0, 0);
+				// 	}
+				// }
+				rb.velocity = new Vector3(0,0,0);
 				rb.AddForce (transform.up * this.jumpForce);
 				isGround = false;
 			}
 		}
  
-		// 左右の移動。一定の速度に達するまではAddforceで力を加え、それ以降はtransform.positionを直接書き換えて同一速度で移動する
-		float speedX = Mathf.Abs (this.rb.velocity.x);
+		// 左右の移動
+		speedX = Mathf.Abs (this.rb.velocity.x);
 		if (speedX < this.runThreshold) {
-			this.rb.AddForce (transform.right * horizontalKey * this.runForce * stateEffect); //未入力の場合は key の値が0になるため移動しない
+			this.rb.AddForce (transform.right * key * this.runForce * stateEffect);
 		} else {
-			this.transform.position += new Vector3 (runSpeed * Time.deltaTime * horizontalKey * stateEffect, 0, 0);
+			this.transform.position += new Vector3 (runSpeed * Time.deltaTime * key * stateEffect, 0, 0);
 		}
 	
 	}
