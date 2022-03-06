@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// 空中ジャンプ、壁ジャンプに回数制限、もしくは壁と反対に飛んでくように
+// ダッシュ追加
+// ローリング追加
+
 // node11.agames.jp:4062
 // 117.102.213.104:4063
 
@@ -9,6 +14,7 @@ public class PlayerController : MonoBehaviour
 {
     // インスペクターで変更可能
     public GroundCheck ground; //接地判定
+	public WallJump wall; //壁ジャンプ判定
     public float jumpForce = 1000f;       // ジャンプ時に加える力
 	public float jumpThreshold = 22f;    // ジャンプ中か判定するための閾値
 	public float runForce = 1.5f;       // 走り始めに加える力
@@ -25,6 +31,7 @@ public class PlayerController : MonoBehaviour
 	private string prevState;            // 前の状態を保存
 	private float stateEffect = 1;       // 状態に応じて横移動速度を変えるための係数
     private bool isGround = true;        // 地面と接地しているか管理するフラグ
+	private bool isWall = true;        // 壁と接しているか管理するフラグ
 
     // Unityで設定されている横移動用のキーを取得
     // この値が1なら右入力がされていて、‐1なら左入力がされている
@@ -63,9 +70,10 @@ public class PlayerController : MonoBehaviour
     void ChangeState(){
 		// 接地判定受け取り
         isGround = ground.IsGround();
+		isWall = wall.IsWall();
 
 		// 接地している場合
-		if (isGround) {
+		if(isGround){
 			// 移動中
 			if (key != 0) {
 				state = "RUN";
@@ -74,8 +82,12 @@ public class PlayerController : MonoBehaviour
 			} else {
 				state = "IDLE";
 			}
+
+		}else if(isWall){
+		// 壁ジャンプ可能な状態（壁にくっついてる状態）
+			
+		}else{
 		// 空中にいる場合
-		} else  {
 			// 上昇中
 			if(rb.velocity.y > 0){
 				state = "JUMP";
@@ -94,19 +106,19 @@ public class PlayerController : MonoBehaviour
 
     void ChangeAnimation(){
         if (prevState != state) {
-			Debug.Log(state);
+			// Debug.Log(state);
 			switch (state) {
 				case "JUMP":
+					anim.SetBool ("run_flag", false);
 					// anim.SetBool ("isFall", true);
 					// anim.SetBool ("isJump", false);
-					anim.SetBool ("run_flag", false);
 					// anim.SetBool ("isIdle", false);
 					stateEffect = 0.5f;
 					break;
 				case "FALL":
+					anim.SetBool ("run_flag", false);
 					// anim.SetBool ("isFall", true);
 					// anim.SetBool ("isJump", false);
-					anim.SetBool ("run_flag", false);
 					// anim.SetBool ("isIdle", false);
 					stateEffect = 0.5f;
 					break;
@@ -119,9 +131,9 @@ public class PlayerController : MonoBehaviour
 					
 					break;
 				default:
+					anim.SetBool ("run_flag", false);
 					// // anim.SetBool ("isIdle", true);
 					// anim.SetBool ("isFall", false);
-					anim.SetBool ("run_flag", false);
 					// anim.SetBool ("isJump", false);
 					stateEffect = 1f;
 					break;
@@ -135,7 +147,7 @@ public class PlayerController : MonoBehaviour
 		// 接地してる時にSpaceキー押下でジャンプ
 		float speedX = Mathf.Abs (this.rb.velocity.x);
 
-		if (isGround) {
+		if(isGround){
 			if (Input.GetKeyDown(KeyCode.Space)) {
 				// // 以下を追加するとジャンプ中にも方向転換可能に
 				// if(key != 0){
@@ -146,19 +158,34 @@ public class PlayerController : MonoBehaviour
 				// 		this.transform.position += new Vector3 (runSpeed * Time.deltaTime * key * stateEffect, 0, 0);
 				// 	}
 				// }
-				rb.velocity = new Vector3(0,0,0);
+
+				rb.velocity = new Vector2(0,0);
 				rb.AddForce (transform.up * this.jumpForce);
 				isGround = false;
+				// Debug.Log("ground");
+			}
+		}else if(isWall){
+			// ズサーを追加したい
+			if (Input.GetKeyDown(KeyCode.Space)){
+				rb.velocity = new Vector2(0,0);
+				transform.localScale = new Vector3 (-transform.localScale.x, 1, 1);
+				// 壁ジャンプで向きを反転
+				rb.AddForce (new Vector2(transform.localScale.x * 150,(this.jumpForce/4)*3));
+				// 斜め上方向にジャンプ
+				
+				isWall = false;
+				// Debug.Log("wall");
 			}
 		}
- 
-		// 左右の移動
-		speedX = Mathf.Abs (this.rb.velocity.x);
-		if (speedX < this.runThreshold) {
-			this.rb.AddForce (transform.right * key * this.runForce * stateEffect);
-		} else {
-			this.transform.position += new Vector3 (runSpeed * Time.deltaTime * key * stateEffect, 0, 0);
+		
+		if(!isWall){
+			// 左右の移動
+			speedX = Mathf.Abs (this.rb.velocity.x);
+			if (speedX < this.runThreshold) {
+				this.rb.AddForce (transform.right * key * this.runForce * stateEffect);
+			} else {
+				this.transform.position += new Vector3 (runSpeed * Time.deltaTime * key * stateEffect, 0, 0);
+			}
 		}
-	
 	}
 }
