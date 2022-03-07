@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
 	private float stateEffect = 1;       // 状態に応じて横移動速度を変えるための係数
     private bool isGround = true;        // 地面と接地しているか管理するフラグ
 	private bool isWall = true;        // 壁と接しているか管理するフラグ
+	private int tmp = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -51,11 +52,21 @@ public class PlayerController : MonoBehaviour
     }
 
 	void GetInputKey(){
+		if(key != 0){
+			tmp = key;
+		}
 		key = 0;
-		if (Input.GetKey (KeyCode.RightArrow)||Input.GetKey (KeyCode.D))
+		if (Input.GetKey (KeyCode.RightArrow)||Input.GetKey (KeyCode.D)){
 			key = 1;
-		if (Input.GetKey (KeyCode.LeftArrow)||Input.GetKey (KeyCode.A))
+		}
+		if (Input.GetKey (KeyCode.LeftArrow)||Input.GetKey (KeyCode.A)){
 			key = -1;
+		}
+		
+		if(tmp != key && key != 0){
+			transform.localScale = new Vector3 (-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+		}
+
 	}
 
     void ChangeState(){
@@ -68,7 +79,7 @@ public class PlayerController : MonoBehaviour
 			// 移動中
 			if (key != 0) {
 				state = "RUN";
-				transform.localScale = new Vector3 (key, 1, 1);
+				transform.localScale = new Vector3 (transform.localScale.x, transform.localScale.y, transform.localScale.z);
 			//待機中
 			} else {
 				state = "IDLE";
@@ -83,13 +94,13 @@ public class PlayerController : MonoBehaviour
 			if(rb.velocity.y > 0){
 				state = "JUMP";
 				if(key != 0){
-					transform.localScale = new Vector3 (key, 1, 1);
+					transform.localScale = new Vector3 (transform.localScale.x, transform.localScale.y, transform.localScale.z);
 				}
 			// 下降中
 			} else if(rb.velocity.y < 0) {
 				state = "FALL";
 				if(key != 0){
-					transform.localScale = new Vector3 (key, 1, 1);
+					transform.localScale = new Vector3 (transform.localScale.x, transform.localScale.y, transform.localScale.z);
 				}
 			}
 		}
@@ -166,7 +177,7 @@ public class PlayerController : MonoBehaviour
 
 			if(Input.GetKeyDown(KeyCode.Space)){
 				rb.velocity = new Vector2(0,0);
-				transform.localScale = new Vector3 (-transform.localScale.x, 1, 1);
+				transform.localScale = new Vector3 (-transform.localScale.x, transform.localScale.y, transform.localScale.z);
 				// 壁ジャンプで向きを反転
 
 				rb.AddForce (new Vector2(transform.localScale.x * 150,(this.jumpForce/4)*3));
