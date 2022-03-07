@@ -155,6 +155,7 @@ public class PlayerController : MonoBehaviour
 				rb.velocity = new Vector2(0,0);
 				rb.AddForce (transform.up * this.jumpForce);
 				isGround = false;
+				isWall = false;
 				// Debug.Log("ground");
 			}
 		}else if(isWall){

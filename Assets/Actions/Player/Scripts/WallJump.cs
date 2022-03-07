@@ -20,10 +20,11 @@ public class WallJump : MonoBehaviour
     }
 
     public bool IsWall(){
-        if(isWallEnter || isWallStay){
-            isWall = true;
-        }else if(isWallExit){
+        Debug.Log(isWallEnter+":"+isWallStay+":"+isWallExit+" // isWall:"+isWall);
+        if(isWallExit){
             isWall = false;
+        }else if(isWallEnter || isWallStay){
+            isWall = true;
         }
         isWallEnter = false;
         isWallStay = false;
@@ -33,21 +34,23 @@ public class WallJump : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.tag == groundTag){
-            // Debug.Log("判定内に入った");
+            Debug.Log("判定内に入った");
             isWallEnter = true;
         }
     }
 
     private void OnTriggerStay2D(Collider2D collision) {
         if(collision.tag == groundTag){
-            // Debug.Log("判定に入ったまま");
+            Debug.Log("判定に入ったまま");
             isWallStay = true;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
         if(collision.tag == groundTag){
-            // Debug.Log("判定から出た");
+            Debug.Log("判定から出た");
+            isWallStay = false;
+            // ↑これがないと壁ジャンプ連打でバグる
             isWallExit = true;
         }
     }
