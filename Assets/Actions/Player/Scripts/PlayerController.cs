@@ -33,16 +33,6 @@ public class PlayerController : MonoBehaviour
     private bool isGround = true;        // 地面と接地しているか管理するフラグ
 	private bool isWall = true;        // 壁と接しているか管理するフラグ
 
-    // Unityで設定されている横移動用のキーを取得
-    // この値が1なら右入力がされていて、‐1なら左入力がされている
-    // 0なら何も入力されていない
-    // コントローラーなどのスティック操作の場合、スティックの倒し加減で小数を取るためfloat
-    float horizontalKey;
-
-    // Unityで設定されている上下移動用のキーを取得
-    // この値が1なら上入力がされていて、‐1なら下入力がされている
-    float verticalKey;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -85,7 +75,7 @@ public class PlayerController : MonoBehaviour
 
 		}else if(isWall){
 		// 壁ジャンプ可能な状態（壁にくっついてる状態）
-			
+		
 		}else{
 		// 空中にいる場合
 			// 上昇中
@@ -166,18 +156,22 @@ public class PlayerController : MonoBehaviour
 			}
 		}else if(isWall){
 			// ズサーを追加したい
-			if (Input.GetKeyDown(KeyCode.Space)){
+			// if(Input.GetKeyDown(KeyCode.))
+
+			if(Input.GetKeyDown(KeyCode.Space)){
 				rb.velocity = new Vector2(0,0);
 				transform.localScale = new Vector3 (-transform.localScale.x, 1, 1);
 				// 壁ジャンプで向きを反転
 				rb.AddForce (new Vector2(transform.localScale.x * 150,(this.jumpForce/4)*3));
 				// 斜め上方向にジャンプ
+				// 進みたい方向キーを入力しながら壁ジャンプすると、壁ジャンプの飛距離が増加
 				
 				isWall = false;
 				// Debug.Log("wall");
 			}
 		}
 		
+
 		if(!isWall){
 			// 左右の移動
 			speedX = Mathf.Abs (this.rb.velocity.x);
