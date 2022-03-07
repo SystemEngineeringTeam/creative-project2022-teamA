@@ -4,56 +4,51 @@ using UnityEngine;
 
 public class GroundCheck : MonoBehaviour
 {
+    private string groundTag = "Ground";    // Tag名
+    private bool isGround,isGroundEnter,isGroundStay,isGroundExit;
 
-    private string groundTag = "Ground";
-    private bool isGround = false;
-    private bool isGroundEnter, isGroundStay, isGroundExit;
-
-    //物理判定の更新毎に呼ぶ必要がある
-    public bool IsGround()
+    // Start is called before the first frame update
+    void Start()
     {
-        if(isGroundEnter || isGroundStay)
-        {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    public bool IsGround(){
+        if(isGroundEnter || isGroundStay){
             isGround = true;
-        }
-        else if(isGroundExit)
-        {
+        }else if(isGroundExit){
             isGround = false;
         }
-
         isGroundEnter = false;
         isGroundStay = false;
         isGroundExit = false;
         return isGround;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.tag == groundTag)
-        {
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if(collision.tag == groundTag){
+            // Debug.Log("判定内に入った");
             isGroundEnter = true;
-            //Debug.Log("地面が判定に入りました");
         }
-        
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.tag == groundTag)
-        {
+    private void OnTriggerStay2D(Collider2D collision) {
+        if(collision.tag == groundTag){
+            // Debug.Log("判定に入ったまま");
             isGroundStay = true;
-            //Debug.Log("地面が判定に入り続けています");
         }
-            
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.tag == groundTag)
-        {
+    private void OnTriggerExit2D(Collider2D collision) {
+        if(collision.tag == groundTag){
+            // Debug.Log("判定から出た");
             isGroundExit = true;
-            //Debug.Log("地面が判定を出ました");
         }
-            
     }
 }
