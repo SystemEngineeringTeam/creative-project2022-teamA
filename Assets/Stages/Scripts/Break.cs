@@ -5,6 +5,9 @@ using UnityEngine;
 public class Break : MonoBehaviour
 {
     public int hp;
+    void Start() {
+        DamageWall(11);
+    }
 
     // Update is called once per frame
     void Update()
@@ -14,7 +17,7 @@ public class Break : MonoBehaviour
     public void DamageWall(int loss) {
         hp -= loss;
 
-        this.GetComponent<ParticleSystem>().Play();
+        this.GetComponentInChildren<ParticleSystem>().Play();
 
         if (hp <= 0) {
             gameObject.SetActive(false);
