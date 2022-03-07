@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-// 空中ジャンプ、壁ジャンプに回数制限、もしくは壁と反対に飛んでくように
+// 空中ジャンプ追加？
+// ジャンプボタンの押す長さでジャンプの高さが変わるようにする？
 // ダッシュ追加
 // ローリング追加
 
@@ -75,7 +76,7 @@ public class PlayerController : MonoBehaviour
 
 		}else if(isWall){
 		// 壁ジャンプ可能な状態（壁にくっついてる状態）
-		
+
 		}else{
 		// 空中にいる場合
 			// 上昇中
@@ -149,6 +150,8 @@ public class PlayerController : MonoBehaviour
 				// 	}
 				// }
 
+				// ボタンの押す長さでジャンプの高さを変化させたい
+
 				rb.velocity = new Vector2(0,0);
 				rb.AddForce (transform.up * this.jumpForce);
 				isGround = false;
@@ -156,12 +159,15 @@ public class PlayerController : MonoBehaviour
 			}
 		}else if(isWall){
 			// ズサーを追加したい
+			// 下に力が働いていて、正面の方向キーを入力している時にだけズサーが出るように
+
 			// if(Input.GetKeyDown(KeyCode.))
 
 			if(Input.GetKeyDown(KeyCode.Space)){
 				rb.velocity = new Vector2(0,0);
 				transform.localScale = new Vector3 (-transform.localScale.x, 1, 1);
 				// 壁ジャンプで向きを反転
+
 				rb.AddForce (new Vector2(transform.localScale.x * 150,(this.jumpForce/4)*3));
 				// 斜め上方向にジャンプ
 				// 進みたい方向キーを入力しながら壁ジャンプすると、壁ジャンプの飛距離が増加
@@ -174,6 +180,7 @@ public class PlayerController : MonoBehaviour
 
 		if(!isWall){
 			// 左右の移動
+			// 
 			speedX = Mathf.Abs (this.rb.velocity.x);
 			if (speedX < this.runThreshold) {
 				this.rb.AddForce (transform.right * key * this.runForce * stateEffect);
