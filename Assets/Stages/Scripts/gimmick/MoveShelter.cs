@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoveShelter : MonoBehaviour
 {
-    public bool OnMoveShelter;
+    private bool OnMoveShelter;
     private void Start() {
         OnMoveShelter=false;
     }
