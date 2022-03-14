@@ -18,6 +18,11 @@ public class ActionManager : MonoBehaviour
     GameObject playerObject;
     public List<Scene> LoadedScenes=new List<Scene>();
 
+    [Header("メニュー関連")]
+    bool isMenu;
+    public Canvas Menu = new Canvas();
+    public List<MonoBehaviour> cStopOnMenu = new List<MonoBehaviour>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -104,4 +109,14 @@ public class ActionManager : MonoBehaviour
 
     #endregion
 
+    public void setMenu(bool b){
+        isMenu=b;
+        Menu.gameObject.SetActive(isMenu);
+        
+        if(isMenu){
+            Time.timeScale=0;
+        }else{
+            Time.timeScale=1;
+        }
+    }
 }
