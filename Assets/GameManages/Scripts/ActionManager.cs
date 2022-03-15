@@ -19,11 +19,9 @@ public class ActionManager : MonoBehaviour
     public List<Scene> LoadedScenes=new List<Scene>();
 
     [Header("メニュー関連")]
-    bool isMenu;
+    bool isMenu=false;
     public Canvas Menu = new Canvas();
-    public List<MonoBehaviour> cStopOnMenu = new List<MonoBehaviour>();
 
-    // Start is called before the first frame update
     void Start()
     {
         if (playerPlefab==null)
@@ -38,9 +36,11 @@ public class ActionManager : MonoBehaviour
         virtualCamera.Follow=playerObject.transform;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Escape)){
+            setMenu(isMenu^true);
+        }
         if(string.Compare(beforeSceneName,activeSceneName)!=0){
             beforeSceneName=activeSceneName;
             TransitionScene(activeSceneName,Vector3.zero);
@@ -118,5 +118,8 @@ public class ActionManager : MonoBehaviour
         }else{
             Time.timeScale=1;
         }
+    }
+    public bool getIsMenu(){
+        return isMenu;
     }
 }
