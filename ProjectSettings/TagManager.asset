@@ -9,6 +9,10 @@ TagManager:
 =======
   - CameraCollider
 >>>>>>> main
+=======
+  - BreakWall
+  - CameraCollider
+>>>>>>> 2ada8fef71735d98fb2aaf8729ac13b7fd6bbbbc
   layers:
   - Default
   - TransparentFX
