@@ -465,6 +465,52 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb93c681662eab64bb476fa8206d0b05, type: 3}
+--- !u!1 &1419164713
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1419164715}
+  - component: {fileID: 1419164714}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1419164714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419164713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b022ba7241a2684428ec299baef1a68e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemDB: {fileID: 11400000, guid: 3abcbbac76eec074aa78b186afb4a0d8, type: 2}
+  itemCounts:
+    list: []
+--- !u!4 &1419164715
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419164713}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 23.122272, y: 11.966708, z: -65.25506}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1461324790
 GameObject:
   m_ObjectHideFlags: 0
@@ -662,7 +708,7 @@ MonoBehaviour:
   playerPlefab: {fileID: 9141603010241311943, guid: a3d6b39ee023647409367b394f9830ae, type: 3}
   CameraTransform: {fileID: 1461324793}
   virtualCamera: {fileID: 2081462297}
-  activeSceneName: SampleScene
+  activeSceneName: stage1
   LoadedScenes: []
   Menu: {fileID: 2031109986}
 --- !u!223 &2031109986 stripped

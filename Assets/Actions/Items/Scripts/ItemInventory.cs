@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemInventory : MonoBehaviour
+public class Inventory : MonoBehaviour
 {
     [SerializeField]
     private ItemDB itemDB;
@@ -13,7 +13,6 @@ public class ItemInventory : MonoBehaviour
         itemDB.getItemList().ForEach((item)=>{
             itemCounts.GetList().Add(new TableItemPair(item,0));
         });
-        Debug.Log(GetItem("hogeWeapon"));
     }
 
     public ItemBasis GetItem(string ID){
