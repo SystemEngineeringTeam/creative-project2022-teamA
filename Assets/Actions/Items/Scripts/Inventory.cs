@@ -20,4 +20,15 @@ public class ItemInventory : MonoBehaviour
         return itemDB.getItemList().Find((item)=>(item.itemID==ID));
     }
 
+    public int GiveItem(ItemBasis item, int cnt){
+        TableItemPair itemPair = itemCounts.GetList().Find((pair)=>(pair.Key==item));
+        int result=0;
+        itemPair.Value+=cnt;
+        if(itemPair.Value>item.maxCountInventory){
+            result=itemPair.Value-item.maxCountInventory;
+            itemPair.Value=item.maxCountInventory;
+        }
+        return result;
+    }
+
 }
