@@ -104,28 +104,38 @@ public class PlayerController : MonoBehaviour
 			switch (state) {
 				case "JUMP":
 					anim.SetBool ("run_flag", false);
-					// anim.SetBool ("isFall", true);
-					// anim.SetBool ("isJump", false);
-					// anim.SetBool ("isIdle", false);
+					anim.SetBool ("walk_flag", false);
+					anim.SetBool ("jump_up_flag", true);
+					anim.SetBool ("jump_down_flag", false);
+					Debug.Log("a");
 					break;
 				case "FALL":
 					anim.SetBool ("run_flag", false);
-					// anim.SetBool ("isFall", true);
-					// anim.SetBool ("isJump", false);
-					// anim.SetBool ("isIdle", false);
+					anim.SetBool ("walk_flag", false);
+					anim.SetBool ("jump_up_flag", false);
+					anim.SetBool ("jump_down_flag", true);
+					Debug.Log("i");
 					break;
 				case "RUN":
 					anim.SetBool ("run_flag", true);
-					// anim.SetBool ("isFall", false);
-					// anim.SetBool ("isJump", false);
-					// anim.SetBool ("isIdle", false);
-					
+					anim.SetBool ("walk_flag", false);
+					anim.SetBool ("jump_up_flag", false);
+					anim.SetBool ("jump_down_flag", false);
+					Debug.Log("u");
+					break;
+				case "WALK":
+					anim.SetBool ("run_flag", false);
+					anim.SetBool ("walk_flag", true);
+					anim.SetBool ("jump_up_flag", false);
+					anim.SetBool ("jump_down_flag", false);
+					Debug.Log("e");
 					break;
 				default:
 					anim.SetBool ("run_flag", false);
-					// // anim.SetBool ("isIdle", true);
-					// anim.SetBool ("isFall", false);
-					// anim.SetBool ("isJump", false);
+					anim.SetBool ("walk_flag", false);
+					anim.SetBool ("jump_up_flag", false);
+					anim.SetBool ("jump_down_flag", false);
+					Debug.Log("o");
 					break;
 			}
 			// 状態の変更を判定するために状態を保存しておく
