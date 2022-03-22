@@ -20,7 +20,7 @@ public class WallJump : MonoBehaviour
     }
 
     public bool IsWall(){
-        Debug.Log(isWallEnter+":"+isWallStay+":"+isWallExit+" // isWall:"+isWall);
+        // Debug.Log(isWallEnter+":"+isWallStay+":"+isWallExit+" // isWall:"+isWall);
         if(isWallExit){
             isWall = false;
         }else if(isWallEnter || isWallStay){

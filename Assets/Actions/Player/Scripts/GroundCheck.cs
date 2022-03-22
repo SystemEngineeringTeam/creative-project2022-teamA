@@ -30,6 +30,9 @@ public class GroundCheck : MonoBehaviour
         isGroundExit = false;
         return isGround;
     }
+    public bool EnterGround(){
+        return isGroundEnter;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.tag == groundTag){
