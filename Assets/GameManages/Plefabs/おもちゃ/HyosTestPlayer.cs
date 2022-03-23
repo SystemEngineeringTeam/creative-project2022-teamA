@@ -5,7 +5,7 @@ using UnityEngine;
 public class HyosTestPlayer : MonoBehaviour
 {
 
-
+    public KeyConfig keyConfig;
     [Header("移動速度関連")]
     public float moveMaxSpeed = 3; // 移動速度
     public float controllGrip = 50; // 移動操作の加速度
@@ -63,7 +63,6 @@ public class HyosTestPlayer : MonoBehaviour
     void Update()
     {
     // 準備
-        
         // 速度をプレイヤーの水平と垂直に分離する
         downAngle = Mathf.Atan2(Physics2D.gravity.y,Physics2D.gravity.x);
         float horizontalAngle = downAngle+Mathf.PI/2;
@@ -76,10 +75,10 @@ public class HyosTestPlayer : MonoBehaviour
     // 操作部分
         // 移動操作
         float horizontalMove =0;
-        if (Input.GetKey(KeyCode.A)){
+        if (keyConfig.left.Stay()){
             horizontalMove-=1;
         }
-        if (Input.GetKey(KeyCode.D)){
+        if (keyConfig.right.Stay()){
             horizontalMove+=1;
         }
         if(onWall){
@@ -94,14 +93,14 @@ public class HyosTestPlayer : MonoBehaviour
         
         // ジャンプ操作
         if(!isJump){
-            if(canJump&&Input.GetKey(KeyCode.Space)){
+            if(canJump&&keyConfig.jump.Stay()){
                 canJump=false;
                 isJump=true;
                 isFirstJump=true;
                 jumpTime=jumpMaxTime;
             }
         }else{
-            if(jumpTime>0&&!Input.GetKey(KeyCode.Space)){
+            if(jumpTime>0&&!keyConfig.jump.Stay()){
                 jumpTime=0;
             }
         }

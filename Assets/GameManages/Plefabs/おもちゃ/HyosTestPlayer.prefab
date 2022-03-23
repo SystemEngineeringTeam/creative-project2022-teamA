@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eedf96510ceba96489208ef6bfa5690d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keyConfig: {fileID: 11400000, guid: 4ba684b94873fb54d9cf58b66007c360, type: 2}
   moveMaxSpeed: 10
   controllGrip: 70
   parentVelocity: {x: 0, y: 0}
@@ -105,8 +106,6 @@ MonoBehaviour:
     down: 0
     left: 0
     right: 0
-  wallSticky: 1
-  wallStickSpeed: 3
 --- !u!1 &4591122664264119474
 GameObject:
   m_ObjectHideFlags: 0
