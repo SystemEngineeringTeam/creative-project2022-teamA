@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e3642fc956b3734e93e599fb596c1c0, type: 3}
-  m_Name: HogeMob
+  m_Name: MobExample
   m_EditorClassIdentifier: 
   objectName: 
-  objectID: HogeMob
+  objectID: HogeMob2
   objectPrefab: {fileID: 8289711208542977131, guid: 936e9f4832bef564ab49cf8ef1e65577, type: 3}
   lv: 1
   hp: 5
@@ -22,9 +22,9 @@ MonoBehaviour:
   abilityDamages:
     list: []
   defence:
-    Nomal: 5
-    Fire: 5
-    Thunder: 5
-    Ice: 5
-    Sacred: 5
-    Dark: 5
+    Nomal: 0
+    Fire: 0
+    Thunder: 0
+    Ice: 0
+    Sacred: 0
+    Dark: 0
