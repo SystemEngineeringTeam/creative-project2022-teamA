@@ -5,16 +5,18 @@ using UnityEngine;
 public class HyosTestPlayer : MonoBehaviour
 {
 
+
     [Header("移動速度関連")]
     public float moveMaxSpeed = 3; // 移動速度
     public float controllGrip = 50; // 移動操作の加速度
+    public Vector2 parentVelocity = new Vector2(); // 動く足場などに追従する速度
 
     [Header("ジャンプ関連")]
     public float groundJumpSpeed = 30; // 最小ジャンプの速度加算
     public float keepJumpFroce = 30; // 大ジャンプ時に加わる加速度(JumpTimeによって減衰)
     public float jumpMaxTime =0.5f; // 大ジャンプで加速度が加わる時間
     public float jumpCoolTime=0.2f; // ジャンプ後再度ジャンプする為に必要な時間
-    public float jumpTime=0; // 大ジャンプするときの残り時間
+    float jumpTime=0; // 大ジャンプするときの残り時間
     bool canJump=false; // ジャンプが可能かどうか
     bool isJump = false; // ジャンプにより上昇中かどうか
     bool isFirstJump=false; // 大小ジャンプ区別のためのフラグ
@@ -22,6 +24,7 @@ public class HyosTestPlayer : MonoBehaviour
     [Header("地面判定関連")]
     
     public GroundsCounter groundsCnt = new GroundsCounter(); // 上下左右の接地数
+    [System.Serializable]
     public struct GroundsCounter
     {
         public int up,down,left,right;
@@ -29,6 +32,7 @@ public class HyosTestPlayer : MonoBehaviour
     int GroundCnt=0; // 接地数
     bool onGround = false; // 接地しているかどうか
     bool onWall=false; // 壁に接しているか
+
 
     
     // その他変数
@@ -65,8 +69,8 @@ public class HyosTestPlayer : MonoBehaviour
         float horizontalAngle = downAngle+Mathf.PI/2;
         horizonDirection = new Vector2(Mathf.Cos(horizontalAngle),Mathf.Sin(horizontalAngle));
         verticalDirection = new Vector2(Mathf.Cos(downAngle+Mathf.PI),Mathf.Sin(downAngle+Mathf.PI));
-        horizontalSpeed = Vector2.Dot(rig.velocity,horizonDirection); //水平方向の速度
-        verticalSpeed = Vector2.Dot(rig.velocity,verticalDirection); //垂直方向の速度
+        horizontalSpeed = Vector2.Dot(rig.velocity-parentVelocity,horizonDirection); //水平方向の速度
+        verticalSpeed = Vector2.Dot(rig.velocity-parentVelocity,verticalDirection); //垂直方向の速度
         
 
     // 操作部分
@@ -81,6 +85,9 @@ public class HyosTestPlayer : MonoBehaviour
         if(onWall){
             if((horizontalMove>0&&groundsCnt.right>0)||(horizontalMove<0&&groundsCnt.left>0)){
                 horizontalMove=0;
+                // if(){
+
+                // }
             }
         }
         bool isMove = (horizontalMove!=0);
@@ -138,13 +145,14 @@ public class HyosTestPlayer : MonoBehaviour
         }
 
         // 水平と垂直の速度を統合
-        rig.velocity = horizonDirection*horizontalSpeed+verticalDirection*verticalSpeed;
+        rig.velocity = horizonDirection*horizontalSpeed+verticalDirection*verticalSpeed+parentVelocity;
         
 
     }
 
 // 固定fps物理演算前の処理
     void FixedUpdate(){
+        parentVelocity = Vector2.zero;
         groundsCnt=new GroundsCounter(); // OnCollision前に接地数を0に初期化
         onGround = (GroundCnt>0);
         StartCoroutine(AFUCoroutine()); // 物理演算後の処理を予約
@@ -169,9 +177,7 @@ public class HyosTestPlayer : MonoBehaviour
     }
     void OnCollisionStay2D(Collision2D collision2D){
         // 上下左右判定の処理
-
         // if(collision2D.transform.CompareTag("Ground")){
-            
             float GroundThreshold=(boxCol.size.y+boxCol.edgeRadius)/2;
             float WallThreshold=(boxCol.size.x+boxCol.edgeRadius)/2;
             foreach (ContactPoint2D contact in collision2D.contacts)
@@ -200,13 +206,13 @@ public class HyosTestPlayer : MonoBehaviour
         // }
     }
     void OnCollisionEnter2D(Collision2D collision2D){
-        // if(collision2D.transform.CompareTag("Ground")){
+        if(collision2D.transform.CompareTag("Ground")){
             GroundCnt++;
-        // }
+        }
     }
     void OnCollisionExit2D(Collision2D collision2D){
-        // if(collision2D.transform.CompareTag("Ground")){
+        if(collision2D.transform.CompareTag("Ground")){
             GroundCnt--;
-        // }
+        }
     }
 }

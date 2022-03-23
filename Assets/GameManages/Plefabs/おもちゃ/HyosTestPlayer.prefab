@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5819302714730981057}
   m_Layer: 0
   m_Name: HyosTestPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95,11 +95,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveMaxSpeed: 10
   controllGrip: 70
+  parentVelocity: {x: 0, y: 0}
   groundJumpSpeed: 12
   keepJumpFroce: 48
   jumpMaxTime: 0.5
   jumpCoolTime: 0.2
-  jumpTime: 0
+  groundsCnt:
+    up: 0
+    down: 0
+    left: 0
+    right: 0
+  wallSticky: 1
+  wallStickSpeed: 3
 --- !u!1 &4591122664264119474
 GameObject:
   m_ObjectHideFlags: 0
