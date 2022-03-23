@@ -14,9 +14,22 @@ public class TamaToPlayer : MonoBehaviour
     private float targetTime = 1.0f;
     private float currentTime = 0;
 
+
+
     // Update is called once per frame
     void Update()
     {
+        List<GameObject> players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
+        float dist = -1;
+        foreach(GameObject p in players)
+        {
+            float d = Vector3.Distance(p.transform.position, transform.position);
+            if (dist == -1 || dist > d)
+            {
+                dist = d;
+                player = p;
+            }
+        }
         //一秒経つごとに弾を発射する
         currentTime += Time.deltaTime;
         if (targetTime < currentTime)
