@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using UnityEngine.Events;
 
 #region DictionaryItem
     [System.Serializable]
@@ -26,6 +28,22 @@
     public class TableFloatPair : Serialize.KeyAndValue<string, float>{
 
         public TableFloatPair (string key, float value) : base (key, value) {
+
+        }
+    }
+#endregion
+
+#region DictionaryEvent
+    [System.Serializable]
+    public class TableEvent: Serialize.TableBase<string, UnityEvent,TableEventPair>
+    {
+        
+    }
+
+    [System.Serializable]
+    public class TableEventPair : Serialize.KeyAndValue<string, UnityEvent>{
+
+        public TableEventPair (string key, UnityEvent value) : base (key, value) {
 
         }
     }

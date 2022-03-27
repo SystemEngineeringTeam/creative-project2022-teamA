@@ -20,7 +20,9 @@ MonoBehaviour:
   mp: 1
   ofence: 1
   abilityDamages:
-    list: []
+    list:
+    - Key: "\u63A5\u89E6\u30C0\u30E1\u30FC\u30B8"
+      Value: 1
   defence:
     Nomal: 5
     Fire: 5
