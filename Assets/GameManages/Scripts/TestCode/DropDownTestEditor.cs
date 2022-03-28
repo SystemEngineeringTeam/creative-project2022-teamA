@@ -11,7 +11,6 @@ public class DropDownTestEditor : Editor
     Component[] components={};
     List<string> menu=new List<string>();
     List<MethodInfo> methodsInComponent=new List<MethodInfo>();
-    bool firstFlag=true;
     public void OnEnable(){
         targetObject = (DropDownTest)target;
     }
@@ -62,8 +61,6 @@ public class DropDownTestEditor : Editor
                 }
             }
             EditorUtility.SetDirty(targetObject);
-        }else if (firstFlag){
-            
         }
         
 
@@ -131,7 +128,5 @@ public class DropDownTestEditor : Editor
 
         serializedObject.ApplyModifiedProperties();
         // Editor.
-
-        firstFlag=false;
     }
 }
