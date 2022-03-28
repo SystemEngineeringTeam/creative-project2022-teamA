@@ -14,13 +14,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   up:
     keys: 7700000011010000
+    clicks: 
   down:
     keys: 7300000012010000
+    clicks: 
   left:
     keys: 6100000014010000
+    clicks: 
   right:
     keys: 6400000013010000
+    clicks: 
   jump:
     keys: 20000000
+    clicks: 
   dash:
     keys: 30010000
+    clicks: 
+  action:
+    keys: 73000000
+    clicks: 
+  attack:
+    keys: 
+    clicks: 00000000
+  lookAt:
+    keys: 
+    clicks: 02000000

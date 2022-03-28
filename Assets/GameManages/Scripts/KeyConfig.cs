@@ -5,18 +5,40 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "KeyConfigExample", menuName="アクションゲーム/データ/キーコンフィグ")]
 public class KeyConfig : ScriptableObject
 {
+    public enum MouseKey{
+        LeftClick,
+        RightClick,
+        MiddleClick,
+    }
     [System.Serializable]
     public struct Key
     {
         public List<KeyCode> keys;
+        public List<MouseKey> clicks;
         public Key(KeyCode k){
             keys=new List<KeyCode>(new KeyCode[]{k});
+            clicks=new List<MouseKey>();
         }
+        public Key(MouseKey c){
+            keys=new List<KeyCode>();
+            clicks=new List<MouseKey>(new MouseKey[]{c});
+        }
+
         public bool Down(){
             bool result=false;
             foreach (var key in keys)
             {
                 if(Input.GetKeyDown(key)){
+                    result=true;
+                    break;
+                }
+            }
+            if(result){
+                return result;
+            }
+            foreach (var click in clicks)
+            {
+                if(Input.GetMouseButtonDown((int)click)){
                     result=true;
                     break;
                 }
@@ -32,6 +54,16 @@ public class KeyConfig : ScriptableObject
                     break;
                 }
             }
+            if(result){
+                return result;
+            }
+            foreach (var click in clicks)
+            {
+                if(Input.GetMouseButtonUp((int)click)){
+                    result=true;
+                    break;
+                }
+            }
             return result;
         }
         public bool Stay(){
@@ -39,6 +71,16 @@ public class KeyConfig : ScriptableObject
             foreach (var key in keys)
             {
                 if(Input.GetKey(key)){
+                    result=true;
+                    break;
+                }
+            }
+            if(result){
+                return result;
+            }
+            foreach (var click in clicks)
+            {
+                if(Input.GetMouseButton((int)click)){
                     result=true;
                     break;
                 }
@@ -54,18 +96,22 @@ public class KeyConfig : ScriptableObject
                     break;
                 }
             }
+            if(!result){
+                return result;
+            }
+            foreach (var click in clicks)
+            {
+                if(!Input.GetMouseButton((int)click)){
+                    result=false;
+                    break;
+                }
+            }
             return result;
         }
         public bool AllDown(){
             bool result=false;
             if(All()){
-                foreach (var key in keys)
-                {
-                    if(Input.GetKeyDown(key)){
-                        result=true;
-                        break;
-                    }
-                }
+                result=Down();
             }
             return result;
         }
@@ -77,4 +123,7 @@ public class KeyConfig : ScriptableObject
     public Key right = new Key(KeyCode.D);
     public Key jump = new Key(KeyCode.Space);
     public Key dash = new Key(KeyCode.LeftShift);
+    public Key action = new Key(KeyCode.S);
+    public Key attack = new Key(MouseKey.LeftClick);
+    public Key lookAt = new Key(MouseKey.MiddleClick);
 }

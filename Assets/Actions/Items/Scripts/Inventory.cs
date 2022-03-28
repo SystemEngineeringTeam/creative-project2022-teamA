@@ -18,7 +18,6 @@ public class Inventory : MonoBehaviour
         itemDB.getItemList().ForEach((item)=>{
             itemCounts.GetList().Add(new TableItemPair(item,0));
         });
-        Debug.Log(GetItem("HogeWeapon"));
     }
 
     public ItemBasis GetItem(string ID){

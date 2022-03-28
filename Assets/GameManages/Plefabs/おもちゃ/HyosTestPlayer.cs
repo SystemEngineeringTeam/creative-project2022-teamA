@@ -62,7 +62,10 @@ public class HyosTestPlayer : MonoBehaviour
 // 変動fpsの毎フレーム処理
     void Update()
     {
+    // キーコンフィグをテストした
+        // Debug.Log(keyConfig.up.Up()+":"+keyConfig.up.Stay()+":"+keyConfig.up.Down()+":"+keyConfig.up.All()+":"+keyConfig.up.AllDown());
     // 準備
+        
         // 速度をプレイヤーの水平と垂直に分離する
         downAngle = Mathf.Atan2(Physics2D.gravity.y,Physics2D.gravity.x);
         float horizontalAngle = downAngle+Mathf.PI/2;
