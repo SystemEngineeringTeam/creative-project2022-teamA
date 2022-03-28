@@ -10,13 +10,28 @@ public class TamaToPlayer : MonoBehaviour
     //弾のプレハブオブジェクト
     public GameObject tama;
 
+    [Header("弾の速さ")][Range(0,100)] public float BulletSpeed = 1.0f;
+
     //一秒ごとに弾を発射するためのもの
     private float targetTime = 1.0f;
     private float currentTime = 0;
 
+
+
     // Update is called once per frame
     void Update()
     {
+        List<GameObject> players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
+        float dist = -1;
+        foreach(GameObject p in players)
+        {
+            float d = Vector3.Distance(p.transform.position, transform.position);
+            if (dist == -1 || dist > d)
+            {
+                dist = d;
+                player = p;
+            }
+        }
         //一秒経つごとに弾を発射する
         currentTime += Time.deltaTime;
         if (targetTime < currentTime)
@@ -32,7 +47,7 @@ public class TamaToPlayer : MonoBehaviour
             //プレイヤーの位置から敵の位置（弾の位置）を引く
             Vector2 vec = player.transform.position - pos;
             //弾のRigidBody2Dコンポネントのvelocityに先程求めたベクトルを入れて力を加える
-            t.GetComponent<Rigidbody2D>().velocity = vec;
+            t.GetComponent<Rigidbody2D>().velocity = vec.normalized * BulletSpeed;
         }
     }
 }
