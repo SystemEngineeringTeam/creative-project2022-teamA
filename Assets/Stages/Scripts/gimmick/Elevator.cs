@@ -41,7 +41,7 @@ public class Elevator : MonoBehaviour
             }
         }
         if(DoMoveElevater){
-            transform.parent.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, MoveDis);
+            transform.parent.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, MoveDis/DelayTime);
             currentTime += Time.deltaTime;
             if(DelayTime <= currentTime){
                 transform.parent.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
