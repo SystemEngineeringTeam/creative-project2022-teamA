@@ -42,8 +42,9 @@ public class HyosTestPlayer : MonoBehaviour
     Vector2 horizonDirection,verticalDirection; // プレイヤーの水平垂直方向
     float horizontalSpeed,verticalSpeed; // プレイヤーの水平垂直方向の速度
     
-    
-    
+    public List<float> coolTimes=new List<float>();
+    public List<float> nowCoolTimes= new List<float>();
+    public List<Collider2D> attackTriggers=new List<Collider2D>();
 
 // 最初の１フレームでの処理
     void Start()
@@ -56,6 +57,8 @@ public class HyosTestPlayer : MonoBehaviour
         if(!boxCol){
             boxCol = gameObject.AddComponent<BoxCollider2D>();
         }
+        nowCoolTimes=new List<float>(new float[coolTimes.Count]);
+        
         
     }
 
@@ -108,6 +111,16 @@ public class HyosTestPlayer : MonoBehaviour
             }
         }
 
+        if(nowCoolTimes[0]<=0.3f){
+            attackTriggers[0].gameObject.SetActive(false);
+        }
+        if(nowCoolTimes[0]<=0){
+            if(keyConfig.attack.Down()){
+                attackTriggers[0].gameObject.SetActive(true);
+                nowCoolTimes[0]=coolTimes[0];
+            }
+        }
+
     // 見た目処理
     if(isMove){
         if(horizontalMove<0){
@@ -149,6 +162,12 @@ public class HyosTestPlayer : MonoBehaviour
         // 水平と垂直の速度を統合
         rig.velocity = horizonDirection*horizontalSpeed+verticalDirection*verticalSpeed+parentVelocity;
         
+        // クールタイム処理
+        for (int i = 0; i < nowCoolTimes.Count; i++){
+            if(nowCoolTimes[i]>0){
+                nowCoolTimes[i]-=Time.deltaTime;
+            }
+        }
 
     }
 
