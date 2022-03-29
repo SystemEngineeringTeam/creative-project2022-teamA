@@ -10,25 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e3642fc956b3734e93e599fb596c1c0, type: 3}
-  m_Name: HogEnemy
+  m_Name: MobExample
   m_EditorClassIdentifier: 
   objectName: 
-  objectID: HogeEnemy
-  objectPrefab: {fileID: 1816506641771721636, guid: f623d9296b94ed14cadd4b62da7a6cf7, type: 3}
+  objectID: HogeMob2
+  objectPrefab: {fileID: 8289711208542977131, guid: 936e9f4832bef564ab49cf8ef1e65577, type: 3}
   lv: 1
   hp: 5
   mp: 1
   ofence: 1
   abilityDamages:
-    list:
-    - Key: "\u901A\u5E38\u653B\u6483"
-      Value: 10
-    - Key: "\u9060\u63A5\u653B\u6483"
-      Value: 5
+    list: []
   defence:
-    Nomal: 10
-    Fire: 10
-    Thunder: 10
-    Ice: 10
-    Sacred: 10
-    Dark: 10
+    Nomal: 0
+    Fire: 0
+    Thunder: 0
+    Ice: 0
+    Sacred: 0
+    Dark: 0

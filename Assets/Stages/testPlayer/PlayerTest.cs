@@ -34,11 +34,13 @@ public class PlayerTest : MonoBehaviour
         {
             rb.velocity = new Vector2(0,rb.velocity.y);
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
+    }
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Space)){
             this.rb.AddForce(transform.up * jumpForce);
         }
     }
+    // 攻撃されたら動く仮置き
     private void OnCollisionEnter2D(Collision2D other) {
         if(other.gameObject.tag=="BreakWall"){
             other.gameObject.GetComponent<Break>().DamageWall(1);

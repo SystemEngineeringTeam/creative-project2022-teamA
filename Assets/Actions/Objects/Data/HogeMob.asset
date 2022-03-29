@@ -13,18 +13,20 @@ MonoBehaviour:
   m_Name: HogeMob
   m_EditorClassIdentifier: 
   objectName: 
-  objectID: 
-  objectPrefab: {fileID: 0}
+  objectID: HogeMob
+  objectPrefab: {fileID: 8289711208542977131, guid: 936e9f4832bef564ab49cf8ef1e65577, type: 3}
   lv: 1
   hp: 5
   mp: 1
   ofence: 1
   abilityDamages:
-    list: []
+    list:
+    - Key: "\u63A5\u89E6\u30C0\u30E1\u30FC\u30B8"
+      Value: 1
   defence:
-    Nomal: 0
-    Fire: 0
-    Thunder: 0
-    Ice: 0
-    Sacred: 0
-    Dark: 0
+    Nomal: 5
+    Fire: 5
+    Thunder: 5
+    Ice: 5
+    Sacred: 5
+    Dark: 5

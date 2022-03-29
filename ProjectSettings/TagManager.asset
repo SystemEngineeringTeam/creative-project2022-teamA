@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - BreakWall
   - CameraCollider
+  - Defence
+  - GameManager
   layers:
   - Default
   - TransparentFX
@@ -20,9 +22,9 @@ TagManager:
   - 
   - BreakObj
   - Efect
+  - CameraCollider
   - 
-  - 
-  - 
+  - DamageTriggers
   - 
   - 
   - 
