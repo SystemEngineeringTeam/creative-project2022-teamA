@@ -14,7 +14,9 @@ public class ActionManager : MonoBehaviour
 
     [Header("ステージ関連")]
     public string activeSceneName;
-    string beforeSceneName;
+    string activeSceneNameBef;
+    public string beforeSceneName; // 前回入っていたシーンの名前
+    public Vector3 lastTransitionPosition; // 前回入っていたシーンでの座標
     GameObject playerObject;
     public List<Scene> LoadedScenes=new List<Scene>();
 
@@ -41,8 +43,8 @@ public class ActionManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape)){
             setMenu(isMenu^true);
         }
-        if(string.Compare(beforeSceneName,activeSceneName)!=0){
-            beforeSceneName=activeSceneName;
+        if(string.Compare(activeSceneNameBef,activeSceneName)!=0){
+            activeSceneNameBef=activeSceneName;
             TransitionScene(activeSceneName,Vector3.zero);
         }
     }
@@ -61,6 +63,7 @@ public class ActionManager : MonoBehaviour
 
     IEnumerator CoroutineTsScene(string sceneName, Vector3 playerPos){
         playerObject.SetActive(false);
+        lastTransitionPosition=playerObject.transform.position;
         playerObject.transform.position=playerPos;
         foreach (Scene scene in LoadedScenes)
         {
@@ -68,6 +71,8 @@ public class ActionManager : MonoBehaviour
         }
         LoadedScenes.Clear();
         yield return SceneManager.LoadSceneAsync(sceneName,LoadSceneMode.Additive);
+        beforeSceneName=activeSceneName;
+        activeSceneName=sceneName;
         Scene loadedScene = SceneManager.GetSceneByName(sceneName);
         // Debug.Log(SceneManager.GetActiveScene().name);
         GameObject camColliderObj = GameObject.FindGameObjectWithTag("CameraCollider");
