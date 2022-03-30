@@ -18,7 +18,8 @@ public class PlayerController : MonoBehaviour
 	public WallJump wall; //壁ジャンプ判定
 
 	[Header("移動値")]
-    public float jumpForce = 700f;       // ジャンプ時に加える力
+    public float jumpForce = 680f;       // ジャンプ時に加える力
+	// ジャンプ力は4.5ブロック分くらい
 	public float runSpeed = 10.0f;       // 走っている間の速度
 	public float walkSpeed = 5.0f;       // 歩いている間の速度
 	[Header("↓ズサーの速度")]

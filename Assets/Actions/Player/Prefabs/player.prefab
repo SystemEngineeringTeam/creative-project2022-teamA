@@ -70,7 +70,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ground: {fileID: 967901524291143153}
   wall: {fileID: 967901524292937813}
-  jumpForce: 700
+  jumpForce: 680
   runSpeed: 10
   walkSpeed: 5
   wallDownSpeed: -4
@@ -108,7 +108,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.05250323, y: -0.004973322}
+  m_Offset: {x: -0.02192527, y: -0.0049732924}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -119,7 +119,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.0044105, y: 1.7431378}
+  m_Size: {x: 0.9432545, y: 1.7431378}
   m_EdgeRadius: 0
 --- !u!1 &967901524291143157
 GameObject:
