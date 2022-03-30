@@ -13,16 +13,23 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // インスペクターで変更可能
+	[Header("インスタンス")]
     public GroundCheck ground; //接地判定
 	public WallJump wall; //壁ジャンプ判定
-    public float jumpForce = 700f;       // ジャンプ時に加える力
+
+	[Header("移動値")]
+    public float jumpForce = 680f;       // ジャンプ時に加える力
+	// ジャンプ力は4.5ブロック分くらい
 	public float runSpeed = 10.0f;       // 走っている間の速度
-	public float runThreshold = 2.2f;   // 速度切り替え判定のための閾値
-	public float timer = 0;
+	public float walkSpeed = 5.0f;       // 歩いている間の速度
+	[Header("↓ズサーの速度")]
+	public float wallDownSpeed = -4.0f;   //ズサー
+
+
 
     private Animator anim = null;
     private Rigidbody2D rb = null;
+
 
 
 	private int key = 0;                 // 左右の入力管理
@@ -30,12 +37,17 @@ public class PlayerController : MonoBehaviour
 	private string prevState;            // 前の状態を保存
     private bool isGround = true;        // 地面と接地しているか管理するフラグ
 	private bool isWall = true;        // 壁と接しているか管理するフラグ
-	private bool isJump = false;      // ジャンプしている最中か管理するフラグ
-	public bool jumpKeyDown = false; //ジャンプボタンを押した瞬間を管理
+	private bool jumpKeyDown = false; //ジャンプボタンを押した瞬間を管理
 	private bool jumpKey = false; //ジャンプボタンを押してる間を管理
 	private bool jumpKeyUp = false; //ジャンプボタンを離した瞬間を管理
-
+	private float jumpTimer = 0;   //ジャンプボタンを押した秒数を記録するためのタイマー
+	private float runTimer = 0;   //方向キーを"素早く"二回連続押したことを記録するためのタイマー
+	private bool runTimer_flag = false;  //方向キーを"素早く"二回連続押したか判定するためのフラグ
+	private bool runFlag = false;     // 走り状態かどうか判定するフラグ
 	private int tmp = 0;
+	private float speed = 0.0f;   //移動スピードを代入する（歩きか走りのスピードを代入）
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -45,9 +57,13 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+
     // Update
 	void Update(){
-		// keyの押下はUpdateで判定(FixedUpdateでは絶対に行ってはいけない。)
+		// keyの押下(特にKeyDown)はUpdateで判定(FixedUpdateでは絶対に行ってはいけない。)
+		if(runTimer_flag){
+			runTimer += Time.deltaTime;
+		}
 
 		if(Input.GetKeyDown(KeyCode.Space)){
 			jumpKeyDown = true;
@@ -57,13 +73,30 @@ public class PlayerController : MonoBehaviour
 			jumpKeyUp = true;
 		}
 
+		if (Input.GetKeyUp (KeyCode.RightArrow)||Input.GetKeyUp (KeyCode.D)){
+			runTimer_flag = true;
+			// runFlag = false;
+			tmp = 1;
+		}else if(Input.GetKeyUp (KeyCode.LeftArrow)||Input.GetKeyUp (KeyCode.A)){
+			runTimer_flag = true;
+			// runFlag = false;
+			tmp = -1;
+		}
+
+		if(!Input.GetKey(KeyCode.RightArrow)&&!Input.GetKey(KeyCode.D)&&!Input.GetKey(KeyCode.LeftArrow)&&!Input.GetKey(KeyCode.A)){
+			// 何のキーも押してないとき
+			runFlag = false;
+		}
+
 		if(ground.EnterGround()){
-			timer = 0.0f;
+			jumpTimer = 0.0f;
 			jumpKeyDown = false;
 			jumpKey = false;
 			jumpKeyUp = false;
 		}
 	}
+
+
     void FixedUpdate(){
 		GetInputKey ();
         ChangeState();
@@ -72,15 +105,30 @@ public class PlayerController : MonoBehaviour
     }
 
 	void GetInputKey(){
-		if(key != 0){
-			tmp = key;
-		}
 		key = 0;
 		if (Input.GetKey (KeyCode.RightArrow)||Input.GetKey (KeyCode.D)){
 			key = 1;
+			if(tmp == key){
+				if(runTimer > 0 && runTimer < 0.2){
+					runFlag = true;
+				}
+				runTimer_flag = false;
+			}
+			runTimer = 0.0f;
 		}
 		if (Input.GetKey (KeyCode.LeftArrow)||Input.GetKey (KeyCode.A)){
-			key = -1;
+			if(key == 1){
+				key = 0;
+			}else{
+				key = -1;
+				if(tmp == key){
+					if(runTimer > 0 && runTimer < 0.2){
+						runFlag = true;
+					}
+					runTimer_flag = false;
+				}
+				runTimer = 0.0f;
+			}
 		}
 	}
 
@@ -100,10 +148,12 @@ public class PlayerController : MonoBehaviour
 				state = "IDLE";
 			}
 
-		}else if(isWall){
-		// 壁ジャンプ可能な状態（壁にくっついてる状態）
+		}
+		// else if(isWall){
+		// // 壁ジャンプ可能な状態（壁にくっついてる状態）
 
-		}else{
+		// }
+		else{
 		// 空中にいる場合
 			// 上昇中
 			if(rb.velocity.y > 0){
@@ -165,7 +215,7 @@ public class PlayerController : MonoBehaviour
 		// 接地してる時にSpaceキー押下でジャンプ
 		if(isGround){
 			if (jumpKeyDown) {
-				timer = 0.0f;
+				jumpTimer = 0.0f;
 				rb.velocity = new Vector2(rb.velocity.x,0);
 				rb.AddForce (transform.up * this.jumpForce);
 
@@ -179,7 +229,7 @@ public class PlayerController : MonoBehaviour
 				transform.localScale = new Vector3 (-transform.localScale.x, transform.localScale.y, transform.localScale.z);
 				// 壁ジャンプで向きを反転
 
-				rb.AddForce (new Vector2(transform.localScale.x * 150,(this.jumpForce/4)*3));
+				rb.AddForce (new Vector2(transform.localScale.x * 300,this.jumpForce));
 				// 斜め上方向にジャンプ
 				// 進みたい方向キーを入力しながら壁ジャンプすると、壁ジャンプの飛距離が増加
 				
@@ -190,33 +240,31 @@ public class PlayerController : MonoBehaviour
 		}
 		
 		// 長押しジャンプ処理
-		if(jumpKey && !jumpKeyUp && timer < 0.3f && rb.velocity.y > 0){
+		if(jumpKey && !jumpKeyUp && jumpTimer < 0.3f && rb.velocity.y > 0){
 			rb.AddForce (transform.up * this.jumpForce * Time.deltaTime * 2);
-			timer += Time.deltaTime;
+			jumpTimer += Time.deltaTime;
+		}
+
+		if(runFlag){
+			speed = runSpeed;
+		}else{
+			speed = walkSpeed;
 		}
 		
 		// 左右の移動
 		if(!isWall){
 			// 壁にいない時
-
-			if(key == 1){
-				// 右を入力している時
+			if(key != 0){
+				// 入力あり
 				if(isGround){
 					// 壁にいなくて地面にいるとき
-					transform.localScale = new Vector3 (Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-					rb.velocity = new Vector2(runSpeed, rb.velocity.y);
+					transform.localScale = new Vector3 (key*Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+					rb.velocity = new Vector2(key*speed, rb.velocity.y);		
 				}else{
 					// 壁にいなくて地面にいないとき（空中）
-					rb.velocity = new Vector2(runSpeed/2, rb.velocity.y);
+					rb.velocity = new Vector2(key*speed, rb.velocity.y);
 				}
-			}else if(key == -1){
-				if(isGround){
-					transform.localScale = new Vector3 (-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-					rb.velocity = new Vector2(-runSpeed, rb.velocity.y);
-				}else{
-					rb.velocity = new Vector2(-runSpeed/2, rb.velocity.y);
-				}
-			}else{
+			}else if(key == 0){
 				// 入力無しの時
 				if(isGround){
 					// 地面にいるとき
@@ -232,9 +280,14 @@ public class PlayerController : MonoBehaviour
 				transform.localScale = new Vector3 (-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
 			}
 		}else{
-			// 壁にいて地面にいないとき（壁をズサーしてるとき）
-			if(rb.velocity.y < 0){
-				rb.velocity = new Vector2(rb.velocity.x, -5.0f);
+			// 壁にいて地面にいないとき
+			if(key != 0 && rb.velocity.x <= 0 && rb.velocity.y <= 0){
+				// 方向入力してるけど移動していない、かつ下に落ちてるとき（壁に向かって進んでるとき）
+				transform.localScale = new Vector3 (key*Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+				rb.velocity = new Vector2(rb.velocity.x, wallDownSpeed);
+			}else if(key != 0){
+				transform.localScale = new Vector3 (key*Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+				rb.velocity = new Vector2(key*speed, rb.velocity.y);
 			}
 		}
 	}
