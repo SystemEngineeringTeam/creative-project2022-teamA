@@ -230,6 +230,10 @@ public class PlayerController : MonoBehaviour
     }
 
     void Move(){
+		if(keyConfig.dash.Down()){
+			Rolling();
+		}
+		
 		// 接地してる時にSpaceキー押下でジャンプ
 		if(isGround){
 			wallJumpFlag = false;
@@ -307,5 +311,10 @@ public class PlayerController : MonoBehaviour
 				rb.velocity = new Vector2(key*speed, rb.velocity.y);
 			}
 		}
+	}
+
+	void Rolling(){
+		// f(x) = -40(x-0.5)^2 + 10
+		// 
 	}
 }
