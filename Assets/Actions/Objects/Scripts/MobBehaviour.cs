@@ -40,6 +40,8 @@ public class MobBehaviour : MonoBehaviour
         MobBehaviour mobB;
         if(mob.TryGetComponent<MobBehaviour>(out mobB)){
             attackToOther(mobB,ability);
+        }else if(mob.transform.parent.TryGetComponent<MobBehaviour>(out mobB)){
+            attackToOther(mobB,ability);
         }
         
     }
