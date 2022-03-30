@@ -6,6 +6,7 @@ public class Hit_destroy : MonoBehaviour
 {
     [Header("消える時間")] public float deleteTime = 5.0f;
     private float time = 0.0f;
+    public MobBehaviour mob;
 
  
 
@@ -27,11 +28,15 @@ public class Hit_destroy : MonoBehaviour
         {
             Destroy(gameObject);
 
-            // Playerと衝突したら、自オブジェクトとPlayerオブジェクトを削除
+         // Playerと衝突したら、自オブジェクトとPlayerオブジェクトを削除
         }
-        else if (other.gameObject.tag == "Player")
+        else if (other.gameObject.tag == "Defence")
         {
-            Destroy(gameObject);
+            if(other.transform.parent.tag == "Player")
+            {
+                mob.attackToOther(other.gameObject,"通常攻撃");
+                Destroy(gameObject);
+            }    
         }
 
     }

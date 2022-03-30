@@ -41,6 +41,8 @@ public class TamaToPlayer : MonoBehaviour
             var pos = this.gameObject.transform.position;
             //弾のプレハブを作成
             var t = Instantiate(tama) as GameObject;
+            //弾に攻撃のプログラムを注入
+            t.GetComponent<Hit_destroy>().mob = GetComponent<MobBehaviour>();
             //弾のプレハブの位置を敵の位置にする
             t.transform.position = pos;
             //敵からプレイヤーに向かうベクトルをつくる
