@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e3642fc956b3734e93e599fb596c1c0, type: 3}
-  m_Name: HogeMob1
+  m_Name: Enemy_Zako1
   m_EditorClassIdentifier: 
-  objectName: 
-  objectID: HogeMob1
-  objectPrefab: {fileID: 8289711208542977131, guid: 936e9f4832bef564ab49cf8ef1e65577, type: 3}
+  objectName: Enemy_Zako1
+  objectID: Enemy_Zako1
+  objectPrefab: {fileID: 5296270907178134595, guid: dad50d989bd454b36bab64029ca616fd, type: 3}
   lv: 1
   hp: 5
   mp: 1
@@ -22,11 +22,12 @@ MonoBehaviour:
   defaultAttr: 0
   abilityDamages:
     list:
-    - Key: "\u63A5\u89E6\u30C0\u30E1\u30FC\u30B8"
+    - Key: "\u901A\u5E38\u653B\u6483"
       Value: 1
   defenceList:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10

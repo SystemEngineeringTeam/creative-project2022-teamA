@@ -10,21 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e3642fc956b3734e93e599fb596c1c0, type: 3}
-  m_Name: MobExample
+  m_Name: Enemy_fly2
   m_EditorClassIdentifier: 
-  objectName: 
-  objectID: HogeMob2
-  objectPrefab: {fileID: 8289711208542977131, guid: 936e9f4832bef564ab49cf8ef1e65577, type: 3}
+  objectName: Enemy_fly2
+  objectID: Enemy_fly2
+  objectPrefab: {fileID: 6169641688808278744, guid: 1fca3e9da2a874a7a8109e6ff53d3a09, type: 3}
   lv: 1
   hp: 5
   mp: 1
   ofence: 1
+  defaultAttr: 0
   abilityDamages:
-    list: []
-  defence:
-    Nomal: 0
-    Fire: 0
-    Thunder: 0
-    Ice: 0
-    Sacred: 0
-    Dark: 0
+    list:
+    - Key: "\u901A\u5E38\u653B\u6483"
+      Value: 1
+  defenceList:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0

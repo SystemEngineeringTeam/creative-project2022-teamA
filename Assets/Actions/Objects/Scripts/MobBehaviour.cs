@@ -6,30 +6,48 @@ using System.Reflection;
 
 public class MobBehaviour : MonoBehaviour
 {
-    [System.Serializable]
-    public struct DefenceFiled
-    {
-        public float damageFactor;
-        public Collider2D collider;
-    }
-    public List<DefenceFiled> defenceFileds=new List<DefenceFiled>();
+    public float hp,mp;
     public MobBasis status;
-    public TableEvent eventsList = new TableEvent();
-
+    public List<AttackEvent> attackEvents=new List<AttackEvent>();
+    public ItemBasis HandedItem;
+    
     void Start()
     {
-        
+        hp=status.hp;
+        mp=status.mp;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if(hp<=0){
+            OnDied();
+        }
+    }
+    public void OnDied(){
+        Destroy(gameObject);
+    }
+
+
+    void LateUpdate(){
+        foreach (AttackEvent attackEvent in attackEvents)
+        {
+            attackEvent.processEvent(this);
+        }
+        attackEvents.Clear();
+    }
+
+    public void attackToOther(GameObject mob,string ability){
+        MobBehaviour mobB;
+        if(mob.TryGetComponent<MobBehaviour>(out mobB)){
+            attackToOther(mobB,ability);
+        }else if(mob.transform.parent.TryGetComponent<MobBehaviour>(out mobB)){
+            attackToOther(mobB,ability);
+        }
         
     }
-    public void attackToOther(){
+    public void attackToOther(MobBehaviour mob,string ability){
+        AttackEvent attackEvent=new AttackEvent(this,mob,ability);
 
-    }
-    public bool boolTrue(bool input,string str,int i){
-        return input;
+        mob.attackEvents.Add(attackEvent);
     }
 }

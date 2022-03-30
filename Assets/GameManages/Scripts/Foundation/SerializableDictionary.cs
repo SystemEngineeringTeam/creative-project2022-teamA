@@ -29,6 +29,18 @@ namespace Serialize {
             return list;
         }
 
+        public int GetIndex(TKey key){
+            int result=-1;
+            for(int i=0;i<list.Count;i++)
+            {
+                if(key.Equals(list[i].Key)){
+                    result=i;
+                    break;
+                }
+            }
+            return result;
+        }
+
         static Dictionary<TKey, TValue> ConvertListToDictionary (List<Type> list) {
             Dictionary<TKey, TValue> dic = new Dictionary<TKey, TValue> ();
             foreach(KeyAndValue<TKey, TValue> pair in list){

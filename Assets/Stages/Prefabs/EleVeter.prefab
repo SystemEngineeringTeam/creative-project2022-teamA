@@ -70,6 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c9cc04d3a3774ef9b7ddb11f1fc2868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  key: {fileID: 11400000, guid: 4ba684b94873fb54d9cf58b66007c360, type: 2}
   currentTime: 0
   DelayTime: 1
   MoveDis: 1
