@@ -10,10 +10,10 @@ public class TamaToPlayer : MonoBehaviour
     //弾のプレハブオブジェクト
     public GameObject tama;
 
-    [Header("弾の速さ")][Range(0,100)] public float BulletSpeed = 1.0f;
+    [Header("弾の速さ")][Range(1,70)] public float BulletSpeed = 1.0f;
 
     //一秒ごとに弾を発射するためのもの
-    private float targetTime = 1.0f;
+    [Header("弾を打つ間隔")][Range(0, 1)] public float targetTime = 0.5f;
     private float currentTime = 0;
 
 
