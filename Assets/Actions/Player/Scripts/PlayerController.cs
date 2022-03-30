@@ -61,6 +61,9 @@ public class PlayerController : MonoBehaviour
     // Update
 	void Update(){
 		// keyの押下(特にKeyDown)はUpdateで判定(FixedUpdateでは絶対に行ってはいけない。)
+		if(runTimer_flag){
+			runTimer += Time.deltaTime;
+		}
 
 		if(Input.GetKeyDown(KeyCode.Space)){
 			jumpKeyDown = true;
@@ -95,10 +98,6 @@ public class PlayerController : MonoBehaviour
 
 
     void FixedUpdate(){
-		if(runTimer_flag){
-			runTimer += Time.deltaTime;
-		}
-
 		GetInputKey ();
         ChangeState();
 		ChangeAnimation();
