@@ -14,8 +14,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 	[Header("インスタンス")]
-    public GroundCheck ground; //接地判定
-	public WallJump wall; //壁ジャンプ判定
+    public GroundCheck ground; 			// 接地判定
+	public WallJump wall; 				// 壁ジャンプ判定
+	public KeyConfig keyConfig; 		// キーコンフィグ
 
 	[Header("移動値")]
     public float jumpForce = 680f;       // ジャンプ時に加える力
@@ -23,7 +24,7 @@ public class PlayerController : MonoBehaviour
 	public float runSpeed = 10.0f;       // 走っている間の速度
 	public float walkSpeed = 5.0f;       // 歩いている間の速度
 	[Header("↓ズサーの速度")]
-	public float wallDownSpeed = -4.0f;   //ズサー
+	public float wallDownSpeed = -4.0f;  // ズサー
 
 
 
@@ -66,27 +67,27 @@ public class PlayerController : MonoBehaviour
 			runTimer += Time.deltaTime;
 		}
 
-		if(Input.GetKeyDown(KeyCode.Space)){
+		if(keyConfig.jump.Down()){
 			jumpKeyDown = true;
-		}else if(Input.GetKey(KeyCode.Space)){
+		}else if(keyConfig.jump.Stay()){
 			jumpKey = true;
-		}else if(Input.GetKeyUp(KeyCode.Space)){
+		}else if(keyConfig.jump.Up()){
 			jumpKeyUp = true;
 		}
 
 		
 
-		if (Input.GetKeyUp (KeyCode.RightArrow)||Input.GetKeyUp (KeyCode.D)){
+		if (keyConfig.right.Up()){
 			runTimer_flag = true;
 			// runFlag = false;
 			tmp = 1;
-		}else if(Input.GetKeyUp (KeyCode.LeftArrow)||Input.GetKeyUp (KeyCode.A)){
+		}else if(keyConfig.left.Up()){
 			runTimer_flag = true;
 			// runFlag = false;
 			tmp = -1;
 		}
 
-		if(!Input.GetKey(KeyCode.RightArrow)&&!Input.GetKey(KeyCode.D)&&!Input.GetKey(KeyCode.LeftArrow)&&!Input.GetKey(KeyCode.A)){
+		if(!keyConfig.right.Stay()&&!keyConfig.left.Stay()){
 			// 何のキーも押してないとき
 			runFlag = false;
 		}
@@ -109,7 +110,7 @@ public class PlayerController : MonoBehaviour
 
 	void GetInputKey(){
 		key = 0;
-		if (Input.GetKey (KeyCode.RightArrow)||Input.GetKey (KeyCode.D)){
+		if (keyConfig.right.Stay()){
 			key = 1;
 			if(tmp == key){
 				if(runTimer > 0 && runTimer < 0.2){
@@ -119,7 +120,7 @@ public class PlayerController : MonoBehaviour
 			}
 			runTimer = 0.0f;
 		}
-		if (Input.GetKey (KeyCode.LeftArrow)||Input.GetKey (KeyCode.A)){
+		if (keyConfig.left.Stay()){
 			if(key == 1){
 				key = 0;
 			}else{
