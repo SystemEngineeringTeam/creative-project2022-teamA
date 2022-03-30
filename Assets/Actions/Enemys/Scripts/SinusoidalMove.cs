@@ -5,14 +5,16 @@ using UnityEngine;
 public class SinusoidalMove : MonoBehaviour
 {
 
-	[SerializeField]
-	float moveSpeed = 5f;
+	[Header("移動速度")]
+	public float moveSpeed = 5f;
 
-	[SerializeField]
-	float frequency = 20f;
+	[Header("頻度")]
+	public float frequency = 20f;
 
-	[SerializeField]
-	float magnitude = 0.5f;
+	[Header("波の大きさ")]
+	public float magnitude = 0.5f;
+
+	[Header("時間")] public float time = 0;
 
 	bool facingRight = true;
 
@@ -31,13 +33,16 @@ public class SinusoidalMove : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-
-		CheckWhereToFace();
-
-		if (facingRight)
+        if (Mathf.Sin(time) < 0)
+        {
 			MoveRight();
-		else
+        }
+        else
+        {
 			MoveLeft();
+        }
+		time += Time.deltaTime;
+
 	}
 
 	void CheckWhereToFace()
@@ -57,14 +62,16 @@ public class SinusoidalMove : MonoBehaviour
 
 	void MoveRight()
 	{
-		pos += transform.right * Time.deltaTime * moveSpeed;
-		transform.position = pos + transform.up * Mathf.Sin(Time.time * frequency) * magnitude;
+		//pos += transform.right * Time.deltaTime * moveSpeed;
+		//transform.position = pos + transform.up * Mathf.Sin(Time.time * frequency) * magnitude;
+		GetComponent<Rigidbody2D>().velocity = new Vector2(moveSpeed, Mathf.Sin(time * frequency) * magnitude);
 	}
 
 	void MoveLeft()
 	{
-		pos -= transform.right * Time.deltaTime * moveSpeed;
-		transform.position = pos + transform.up * Mathf.Sin(Time.time * frequency) * magnitude;
+		//pos -= transform.right * Time.deltaTime * moveSpeed;
+		//transform.position = pos + transform.up * Mathf.Sin(Time.time * frequency) * magnitude;
+		GetComponent<Rigidbody2D>().velocity = new Vector2(-moveSpeed, Mathf.Sin(time * frequency) * magnitude);
 	}
 
 }
