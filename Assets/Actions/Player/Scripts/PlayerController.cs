@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
 	private bool runFlag = false;     // 走り状態かどうか判定するフラグ
 	private int tmp = 0;
 	private float speed = 0.0f;   //移動スピードを代入する（歩きか走りのスピードを代入）
+	private bool wallJumpFlag = false;  // 壁ジャンの慣性を保つため
 
 
 
@@ -72,6 +73,8 @@ public class PlayerController : MonoBehaviour
 		}else if(Input.GetKeyUp(KeyCode.Space)){
 			jumpKeyUp = true;
 		}
+
+		
 
 		if (Input.GetKeyUp (KeyCode.RightArrow)||Input.GetKeyUp (KeyCode.D)){
 			runTimer_flag = true;
@@ -180,30 +183,44 @@ public class PlayerController : MonoBehaviour
 					anim.SetBool ("walk_flag", false);
 					anim.SetBool ("jump_up_flag", true);
 					anim.SetBool ("jump_down_flag", false);
+					anim.SetBool ("rolling_flag", false);
 					break;
 				case "FALL":
 					anim.SetBool ("run_flag", false);
 					anim.SetBool ("walk_flag", false);
 					anim.SetBool ("jump_up_flag", false);
 					anim.SetBool ("jump_down_flag", true);
+					anim.SetBool ("rolling_flag", false);
 					break;
 				case "RUN":
 					anim.SetBool ("run_flag", true);
 					anim.SetBool ("walk_flag", false);
 					anim.SetBool ("jump_up_flag", false);
 					anim.SetBool ("jump_down_flag", false);
+					anim.SetBool ("rolling_flag", false);
 					break;
 				case "WALK":
 					anim.SetBool ("run_flag", false);
 					anim.SetBool ("walk_flag", true);
 					anim.SetBool ("jump_up_flag", false);
 					anim.SetBool ("jump_down_flag", false);
+					anim.SetBool ("rolling_flag", false);
 					break;
+				case "ROLLING":
+					anim.SetBool ("run_flag", false);
+					anim.SetBool ("walk_flag", false);
+					anim.SetBool ("jump_up_flag", false);
+					anim.SetBool ("jump_down_flag", false);
+					anim.SetBool ("rolling_flag", true);
+					break;
+				case "ATTACK":
+					// 攻撃モーションが追加されたらここに
 				default:
 					anim.SetBool ("run_flag", false);
 					anim.SetBool ("walk_flag", false);
 					anim.SetBool ("jump_up_flag", false);
 					anim.SetBool ("jump_down_flag", false);
+					anim.SetBool ("rolling_flag", false);
 					break;
 			}
 			// 状態の変更を判定するために状態を保存しておく
@@ -214,6 +231,7 @@ public class PlayerController : MonoBehaviour
     void Move(){
 		// 接地してる時にSpaceキー押下でジャンプ
 		if(isGround){
+			wallJumpFlag = false;
 			if (jumpKeyDown) {
 				jumpTimer = 0.0f;
 				rb.velocity = new Vector2(rb.velocity.x,0);
@@ -225,24 +243,23 @@ public class PlayerController : MonoBehaviour
 			}
 		}else if(isWall){
 			if(jumpKeyDown){
+				wallJumpFlag = true;
 				rb.velocity = new Vector2(0,0);
 				transform.localScale = new Vector3 (-transform.localScale.x, transform.localScale.y, transform.localScale.z);
 				// 壁ジャンプで向きを反転
 
 				rb.AddForce (new Vector2(transform.localScale.x * 300,this.jumpForce));
 				// 斜め上方向にジャンプ
-				// 進みたい方向キーを入力しながら壁ジャンプすると、壁ジャンプの飛距離が増加
 				
 				jumpKeyDown = false;
 				isWall = false;
-				// Debug.Log("wall");
 			}
 		}
 		
 		// 長押しジャンプ処理
 		if(jumpKey && !jumpKeyUp && jumpTimer < 0.3f && rb.velocity.y > 0){
-			rb.AddForce (transform.up * this.jumpForce * Time.deltaTime * 2);
-			jumpTimer += Time.deltaTime;
+			rb.AddForce (transform.up * this.jumpForce * Time.fixedDeltaTime * 2);
+			jumpTimer += Time.fixedDeltaTime;
 		}
 
 		if(runFlag){
@@ -266,12 +283,11 @@ public class PlayerController : MonoBehaviour
 				}
 			}else if(key == 0){
 				// 入力無しの時
-				if(isGround){
-					// 地面にいるとき
-					rb.velocity = new Vector2(0, 0);
+				if(!wallJumpFlag){
+					// 壁ジャンプしてないとき
+					rb.velocity = new Vector2(0, rb.velocity.y);	
 				}
 			}
-
 		}else if(isGround){
 			// 壁に付いてて地面にも付いてるとき
 			if(key == 1){
