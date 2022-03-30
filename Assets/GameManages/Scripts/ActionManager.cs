@@ -44,7 +44,6 @@ public class ActionManager : MonoBehaviour
             setMenu(isMenu^true);
         }
         if(string.Compare(activeSceneNameBef,activeSceneName)!=0){
-            activeSceneNameBef=activeSceneName;
             TransitionScene(activeSceneName,Vector3.zero);
         }
     }
@@ -72,7 +71,7 @@ public class ActionManager : MonoBehaviour
         LoadedScenes.Clear();
         yield return SceneManager.LoadSceneAsync(sceneName,LoadSceneMode.Additive);
         beforeSceneName=activeSceneName;
-        activeSceneName=sceneName;
+        activeSceneName=activeSceneNameBef=sceneName;
         Scene loadedScene = SceneManager.GetSceneByName(sceneName);
         // Debug.Log(SceneManager.GetActiveScene().name);
         GameObject camColliderObj = GameObject.FindGameObjectWithTag("CameraCollider");
