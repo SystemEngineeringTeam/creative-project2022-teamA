@@ -34,7 +34,7 @@ MonoBehaviour:
     keys: 73000000
     clicks: 
   attack:
-    keys: 
+    keys: 7a000000
     clicks: 00000000
   lookAt:
     keys: 

@@ -570,7 +570,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -714,6 +714,8 @@ MonoBehaviour:
   CameraTransform: {fileID: 1461324793}
   virtualCamera: {fileID: 2081462297}
   activeSceneName: stage1
+  beforeSceneName: 
+  lastTransitionPosition: {x: 0, y: 0, z: 0}
   LoadedScenes: []
   Menu: {fileID: 2031109986}
 --- !u!1 &1724227581
@@ -1049,7 +1051,7 @@ MonoBehaviour:
   m_Follow: {fileID: 1603964046}
   m_Lens:
     FieldOfView: 40
-    OrthographicSize: 10
+    OrthographicSize: 6
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
