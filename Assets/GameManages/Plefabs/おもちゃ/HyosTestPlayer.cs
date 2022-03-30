@@ -9,6 +9,7 @@ public class HyosTestPlayer : MonoBehaviour
     [Header("移動速度関連")]
     public float moveMaxSpeed = 3; // 移動速度
     public float controllGrip = 50; // 移動操作の加速度
+    public float controllGripAir = 30; // 空中での移動加速度
     public Vector2 parentVelocity = new Vector2(); // 動く足場などに追従する速度
 
     [Header("ジャンプ関連")]
@@ -33,7 +34,12 @@ public class HyosTestPlayer : MonoBehaviour
     bool onGround = false; // 接地しているかどうか
     bool onWall=false; // 壁に接しているか
 
-
+    [Header("アクション追加要素")]
+    public bool wallSticky =true; // 壁ズザーあり
+    public float wallStickSpeed = 3; // 壁ズザーの速度
+    bool isWallStick=false; // 壁ズザーのフラグ
+    public bool wallJump = true;
+    public float wallJumpHorizonSpeed=20;
     
     // その他変数
     Rigidbody2D rig; // プレイヤーのrigidBody2D
@@ -41,6 +47,7 @@ public class HyosTestPlayer : MonoBehaviour
     float downAngle; // プレイヤーの下方向の角度
     Vector2 horizonDirection,verticalDirection; // プレイヤーの水平垂直方向
     float horizontalSpeed,verticalSpeed; // プレイヤーの水平垂直方向の速度
+    bool wallSideRight=false;
     
     public List<float> coolTimes=new List<float>();
     public List<float> nowCoolTimes= new List<float>();
@@ -87,12 +94,15 @@ public class HyosTestPlayer : MonoBehaviour
         if (keyConfig.right.Stay()){
             horizontalMove+=1;
         }
+        isWallStick=false;
         if(onWall){
+            wallSideRight=groundsCnt.right>0;
             if((horizontalMove>0&&groundsCnt.right>0)||(horizontalMove<0&&groundsCnt.left>0)){
                 horizontalMove=0;
-                // if(){
-
-                // }
+                if(wallSticky){
+                    isWallStick=(verticalSpeed<=-wallStickSpeed);
+                    verticalSpeed=Mathf.Max(verticalSpeed,-wallStickSpeed);
+                }
             }
         }
         bool isMove = (horizontalMove!=0);
@@ -123,7 +133,7 @@ public class HyosTestPlayer : MonoBehaviour
 
     // 見た目処理
     if(isMove){
-        if(horizontalMove<0){
+        if(horizontalSpeed<0){
             transform.rotation=Quaternion.Euler(0,180,0);
         }else{
             transform.rotation=Quaternion.identity;
@@ -136,7 +146,11 @@ public class HyosTestPlayer : MonoBehaviour
     // 処理部分
 
         // プレイヤーの移動方向に合わせて水平速度を変更
-        horizontalSpeed = Mathf.MoveTowards(horizontalSpeed,horizontalMove*moveMaxSpeed,controllGrip*Time.deltaTime);
+        if(canJump){
+            horizontalSpeed = Mathf.MoveTowards(horizontalSpeed,horizontalMove*moveMaxSpeed,controllGrip*Time.deltaTime);
+        }else{
+            horizontalSpeed = Mathf.MoveTowards(horizontalSpeed,horizontalMove*moveMaxSpeed,controllGripAir*Time.deltaTime);
+        }
         // horizontalSpeed = horizontalMove*moveMaxSpeed; // 簡易版
 
         // ジャンプ処理
@@ -144,8 +158,11 @@ public class HyosTestPlayer : MonoBehaviour
             if(jumpTime>0){
                 if (isFirstJump){
                     // 小ジャンプの最初の処理
-                    verticalSpeed+=groundJumpSpeed;
+                    verticalSpeed=Mathf.Min(verticalSpeed+groundJumpSpeed,groundJumpSpeed);
                     isFirstJump=false;
+                    if(wallJump&&isWallStick){
+                        horizontalSpeed+=(wallSideRight?-1:1)*wallJumpHorizonSpeed;
+                    }
                 }else{
                     // 大ジャンプの処理
                     verticalSpeed+=keepJumpFroce*(jumpTime/jumpMaxTime)*Time.deltaTime;
@@ -188,7 +205,7 @@ public class HyosTestPlayer : MonoBehaviour
 // 固定fps物理演算後の処理(コルーチンにより実装)
     void AfterFixedUpdate(){
         // フラグ関連
-        canJump = (groundsCnt.down>0&&jumpMaxTime-jumpTime>=jumpCoolTime);
+        canJump = ((groundsCnt.down>0||(isWallStick&&wallJump))&&jumpMaxTime-jumpTime>=jumpCoolTime);
         if(canJump){
             isJump=false;
         }

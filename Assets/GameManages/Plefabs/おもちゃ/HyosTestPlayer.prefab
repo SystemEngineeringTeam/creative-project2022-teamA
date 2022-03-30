@@ -98,6 +98,7 @@ MonoBehaviour:
   keyConfig: {fileID: 11400000, guid: 4ba684b94873fb54d9cf58b66007c360, type: 2}
   moveMaxSpeed: 10
   controllGrip: 70
+  controllGripAir: 40
   parentVelocity: {x: 0, y: 0}
   groundJumpSpeed: 12
   keepJumpFroce: 40
@@ -108,6 +109,10 @@ MonoBehaviour:
     down: 0
     left: 0
     right: 0
+  wallSticky: 1
+  wallStickSpeed: 3
+  wallJump: 1
+  wallJumpHorizonSpeed: 20
   coolTimes:
   - 0.7
   nowCoolTimes:
