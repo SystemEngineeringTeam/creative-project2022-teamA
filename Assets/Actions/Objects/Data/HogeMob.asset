@@ -19,14 +19,15 @@ MonoBehaviour:
   hp: 5
   mp: 1
   ofence: 1
+  defaultAttr: 0
   abilityDamages:
     list:
     - Key: "\u63A5\u89E6\u30C0\u30E1\u30FC\u30B8"
-      Value: 1
-  defence:
-    Nomal: 5
-    Fire: 5
-    Thunder: 5
-    Ice: 5
-    Sacred: 5
-    Dark: 5
+      Value: 10
+  defenceList:
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
