@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Elevator : MonoBehaviour
 {
+    public KeyConfig key;
     private bool OnMoveElevater;
     private bool DoMoveElevater;
     private bool UnLock;
@@ -33,7 +34,7 @@ public class Elevator : MonoBehaviour
     private void Update() {
         if(OnMoveElevater && UnLock){
             // キー入力
-            if(Input.GetKeyDown(KeyCode.UpArrow)){
+            if(key.action.Down()){
                 Debug.Log("作動するよ");
                 DoMoveElevater = true;
                 UnLock=false;
