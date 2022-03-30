@@ -100,7 +100,7 @@ MonoBehaviour:
   controllGrip: 70
   parentVelocity: {x: 0, y: 0}
   groundJumpSpeed: 12
-  keepJumpFroce: 48
+  keepJumpFroce: 40
   jumpMaxTime: 0.5
   jumpCoolTime: 0.2
   groundsCnt:

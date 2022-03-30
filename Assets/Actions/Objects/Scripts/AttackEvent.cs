@@ -49,7 +49,7 @@ public class AttackEvent
         if(defenceBuff!=null){
             defenceBuff.ForEach((b)=>{dBuffSum+=b;});
         }
-        return fromLevel*abilityPower*((ofence+addOfence)*oBuffSum)/((defence+addDefence)*dBuffSum);
+        return Mathf.Max(fromLevel*abilityPower*((ofence+addOfence)*oBuffSum)/((defence+addDefence)*dBuffSum),1);
     }
     public float damageCalc(){
         return damageCalc(ofence,addOfence,ofenceBuff,defence,addDefence,defenceBuff,abilityPower,attackFrom.status.lv);
