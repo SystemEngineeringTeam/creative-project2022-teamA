@@ -34,7 +34,7 @@ public class Hit_destroy : MonoBehaviour
         {
             if(other.transform.parent.tag == "Player")
             {
-                mob.attackToOther(other.gameObject,"通常攻撃");
+                mob.attackToOther(other.transform.parent.gameObject,"通常攻撃");
                 Destroy(gameObject);
             }    
         }
