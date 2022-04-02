@@ -17,7 +17,7 @@ public class StageToStage : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.tag=="Player"){
-            Debug.Log("シェルターへ移動できるよ");
+            Debug.Log("ステージ移動できるよ");
             GameManager.GetComponent<ActionManager>().TransitionScene(scene,position);
         }
     }
