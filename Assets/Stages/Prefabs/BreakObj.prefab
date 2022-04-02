@@ -185,5 +185,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 0
   mp: 0
-  status: {fileID: 11400000, guid: c8081bfac6dbd4d6485debd44917468c, type: 2}
+  status: {fileID: 11400000, guid: e4bcef179019acf46a984d1790adcfc9, type: 2}
   HandedItem: {fileID: 0}

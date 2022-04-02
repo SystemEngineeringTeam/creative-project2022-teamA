@@ -7,9 +7,6 @@ public class ShelterToStage : MonoBehaviour
     public KeyConfig key;
     public string scene;
     private Vector3 position;
-    public int x = 0;
-    public int y = 0;
-    public int z = 0;
     private bool OnMoveShelter;
     GameObject GameManager;
     public TablePoint tablePoint = new TablePoint();
@@ -24,7 +21,7 @@ public class ShelterToStage : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.tag=="Player"){
             OnMoveShelter=true;
-            Debug.Log("シェルターへ移動できるよ");
+            Debug.Log("ステージへ移動できるよ");
         }
     }
     private void OnTriggerExit2D(Collider2D other) {
