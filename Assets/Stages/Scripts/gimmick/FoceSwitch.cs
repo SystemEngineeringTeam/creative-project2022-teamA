@@ -5,40 +5,46 @@ using UnityEngine;
 public class FoceSwitch : MonoBehaviour
 {
     public bool FlgRight;
-    public float power;
-    private bool flg;
-    private GameObject[] FoceObjs;
     private bool FlgSwich;
-    private Vector2 force;
+    public float force;
     private Transform child;
     private Vector2 smallSize = new Vector2(1.0f,0.5f);
-
+    private Vector2 normalSize = new Vector2(1.0f,1.0f);
+    private GameObject GimickManeger;
+    private float timer;
+    private bool FlgTime;
     
     // Start is called before the first frame update
     void Start()
     {
-        FoceObjs = GameObject.FindGameObjectsWithTag("ForceObj");
-        if(!FlgRight) power = power*-1.0f;
-        force = new Vector2(power, 0.0f);
+        GimickManeger = GameObject.FindWithTag("GimickManager");
+        if(!FlgRight) force = -force;
         child = GetComponentInChildren<Transform>();
-        FlgSwich = false;
-        flg=true;
+        FlgSwich = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(GetComponent<PlayerIn>().FlgPlayerIn && flg){
-            flg=false;
-            FlgSwich=true;
-        }else{
-            flg=true;
+// プレイヤーが範囲外だと操作可能
+        if(!GetComponent<PlayerIn>().FlgPlayerStay){
+            child.transform.localScale = normalSize;
+            FlgTime=true;
+            // Debug.Log("出たよ");
         }
-
-        if(FlgSwich){
-            foreach (GameObject FoceObj in FoceObjs) {
-                FoceObj.GetComponent<Rigidbody2D>().AddForce(force);
+// 二重ボタン押し防止
+        if(FlgTime){
+            timer+=Time.deltaTime;
+            if(timer<=0.5f){
+                timer=0;
+                FlgTime=false;
+                FlgSwich=true;
             }
+        }
+// ボタン操作可能かつプレイヤーが範囲内
+        if(FlgSwich && GetComponent<PlayerIn>().FlgPlayerStay){
+            GimickManeger.GetComponent<GimickManager>().FoceSwich(force);
+            // Debug.Log("力を加えた");
             child.transform.localScale = smallSize;
             FlgSwich=false;
         }
