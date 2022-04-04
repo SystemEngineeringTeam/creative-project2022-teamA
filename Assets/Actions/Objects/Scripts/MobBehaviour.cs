@@ -23,7 +23,7 @@ public class MobBehaviour : MonoBehaviour
             OnDied();
         }
     }
-    public void OnDied(){
+    public virtual void OnDied(){
         Destroy(gameObject);
     }
 
@@ -36,14 +36,16 @@ public class MobBehaviour : MonoBehaviour
         attackEvents.Clear();
     }
 
-    public void attackToOther(GameObject mob,string ability){
+    public virtual void attackToOther(GameObject mob,string ability){
         MobBehaviour mobB;
         if(mob.TryGetComponent<MobBehaviour>(out mobB)){
+            attackToOther(mobB,ability);
+        }else if(mob.transform.parent.TryGetComponent<MobBehaviour>(out mobB)){
             attackToOther(mobB,ability);
         }
         
     }
-    public void attackToOther(MobBehaviour mob,string ability){
+    public virtual void attackToOther(MobBehaviour mob,string ability){
         AttackEvent attackEvent=new AttackEvent(this,mob,ability);
 
         mob.attackEvents.Add(attackEvent);

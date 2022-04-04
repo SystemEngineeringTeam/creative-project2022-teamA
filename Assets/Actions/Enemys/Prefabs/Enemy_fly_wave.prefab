@@ -1,5 +1,52 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6116466947872621202
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6376507355109233795}
+  - component: {fileID: 3530774315309210384}
+  m_Layer: 13
+  m_Name: Defence
+  m_TagString: Defence
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6376507355109233795
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6116466947872621202}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.79, y: 0.79, z: 0.79}
+  m_Children: []
+  m_Father: {fileID: 6169641688808278720}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &3530774315309210384
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6116466947872621202}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &6169641688808278744
 GameObject:
   m_ObjectHideFlags: 0
@@ -16,6 +63,7 @@ GameObject:
   - component: {fileID: 6169641688808278749}
   - component: {fileID: 6169641688808278750}
   - component: {fileID: 6169641688808278751}
+  - component: {fileID: 5300315649050775204}
   m_Layer: 0
   m_Name: Enemy_fly_wave
   m_TagString: Enemy
@@ -35,6 +83,7 @@ Transform:
   m_LocalScale: {x: 1.3496042, y: 1.4021863, z: 1.4021863}
   m_Children:
   - {fileID: 6169641690355363185}
+  - {fileID: 6376507355109233795}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -200,6 +249,22 @@ MonoBehaviour:
   moveSpeed: 3
   frequency: 5
   magnitude: 2
+--- !u!114 &5300315649050775204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6169641688808278744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e60514a55ba1a7a448e6388cc2ab639a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 0
+  mp: 0
+  status: {fileID: 11400000, guid: 1548765db135c44ce8c9c0a84cd91030, type: 2}
+  HandedItem: {fileID: 0}
 --- !u!1 &6169641690355363212
 GameObject:
   m_ObjectHideFlags: 0

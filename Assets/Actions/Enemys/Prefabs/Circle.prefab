@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -7533061405007608036}
   - component: {fileID: -6619235575240211819}
   - component: {fileID: 4846322068942946833}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,6 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deleteTime: 10
+  mob: {fileID: 0}
 --- !u!58 &4846322068942946833
 CircleCollider2D:
   m_ObjectHideFlags: 0
