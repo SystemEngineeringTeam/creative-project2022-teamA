@@ -1,5 +1,52 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2281889528022128005
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7140674243026174495}
+  - component: {fileID: 8955062384010231}
+  m_Layer: 13
+  m_Name: Defence
+  m_TagString: Defence
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7140674243026174495
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2281889528022128005}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5723338386336100175}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &8955062384010231
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2281889528022128005}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.0095191}
+  m_Size: {x: 0.7221124, y: 1.6790295}
+  m_Direction: 0
 --- !u!1 &4199113931456873370
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,7 +59,7 @@ GameObject:
   - component: {fileID: 6974778892830859796}
   - component: {fileID: 6558275011416595683}
   - component: {fileID: 5819302714730981057}
-  - component: {fileID: 5925345891645207641}
+  - component: {fileID: 7695882258011840420}
   m_Layer: 0
   m_Name: HyosTestPlayer
   m_TagString: Player
@@ -33,6 +80,7 @@ Transform:
   m_Children:
   - {fileID: 2614771445675885082}
   - {fileID: 3156547125938085209}
+  - {fileID: 7140674243026174495}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -119,7 +167,7 @@ MonoBehaviour:
   - 0
   attackTriggers:
   - {fileID: 161021828668749020}
---- !u!114 &5925345891645207641
+--- !u!114 &7695882258011840420
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,7 +176,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4199113931456873370}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e60514a55ba1a7a448e6388cc2ab639a, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f647e0d16beb8f45b435e5d15fc81fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 0
