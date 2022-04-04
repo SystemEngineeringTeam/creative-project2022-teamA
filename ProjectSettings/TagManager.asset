@@ -10,6 +10,8 @@ TagManager:
   - CameraCollider
   - Defence
   - GameManager
+  - ForceObj
+  - GimickManager
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - 
   - 
   - 
-  - BreakObj
+  - Back
   - Efect
   - CameraCollider
   - 
