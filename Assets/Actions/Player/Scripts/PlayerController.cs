@@ -180,6 +180,10 @@ public class PlayerController : MonoBehaviour
 				}
 			}
 		}
+		if(dashFlag){
+			state = "DASH";
+		}
+
 	}
 
     void ChangeAnimation(){
@@ -207,7 +211,7 @@ public class PlayerController : MonoBehaviour
 					anim.SetBool ("jump_down_flag", false);
 					anim.SetBool ("rolling_flag", false);
 					break;
-				case "WALK":
+				case "DASH":
 					anim.SetBool ("run_flag", false);
 					anim.SetBool ("walk_flag", true);
 					anim.SetBool ("jump_up_flag", false);
@@ -346,10 +350,11 @@ public class PlayerController : MonoBehaviour
 		Vector2 force = new Vector2(key * dashPower,0);
 		rb.AddForce (force,ForceMode2D.Impulse);
 		Invoke("runFlagToTrue",0.3f);
-		Debug.Log("Dash中だよ！");
+		// Debug.Log("Dash中だよ！");
 	}
 
 	void runFlagToTrue(){
+		// 通常の移動モーションに遷移可能
 		runFlag = true;
 		canDashFlag = false;
 		if(isGround){
