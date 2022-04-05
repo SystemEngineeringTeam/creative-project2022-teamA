@@ -1,19 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class GimickManager : MonoBehaviour
 {
+    
     private GameObject[] FoceObjs;
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start(){
         FoceObjs = GameObject.FindGameObjectsWithTag("ForceObj");
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update(){
         
     }
     public void FoceSwich(float force){

@@ -5,7 +5,7 @@ using UnityEngine;
 public class FoceSwitch : MonoBehaviour
 {
     public bool FlgRight;
-    private bool FlgSwich;
+    private bool OperationPossible;
     public float force;
     private Transform child;
     private Vector2 smallSize = new Vector2(1.0f,0.5f);
@@ -20,7 +20,7 @@ public class FoceSwitch : MonoBehaviour
         GimickManeger = GameObject.FindWithTag("GimickManager");
         if(!FlgRight) force = -force;
         child = GetComponentInChildren<Transform>();
-        FlgSwich = true;
+        OperationPossible = true;
     }
 
     // Update is called once per frame
@@ -38,16 +38,15 @@ public class FoceSwitch : MonoBehaviour
             if(timer<=0.5f){
                 timer=0;
                 FlgTime=false;
-                FlgSwich=true;
+                OperationPossible=true;
             }
         }
 // ボタン操作可能かつプレイヤーが範囲内
-        if(FlgSwich && GetComponent<PlayerIn>().FlgPlayerStay){
+        if(OperationPossible && GetComponent<PlayerIn>().FlgPlayerStay){
             GimickManeger.GetComponent<GimickManager>().FoceSwich(force);
             // Debug.Log("力を加えた");
             child.transform.localScale = smallSize;
-            FlgSwich=false;
+            OperationPossible=false;
         }
-
     }
 }
