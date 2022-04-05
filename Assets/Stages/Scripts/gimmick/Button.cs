@@ -15,13 +15,7 @@ public class Button : Editor { // 継承しているクラスがMonoBehaviourで
         // publicなメソッドを実行するボタン
         if (GUILayout.Button("foceButton!"))
         {
-            GimickManager.FoceSwich(10.5f);
-        }
-
-        // privateなメソッドを実行するボタン
-        if (GUILayout.Button("PrivateMethod!"))
-        {
-            // GimickManager.SendMessage("DataSet_Private", null, SendMessageOptions.DontRequireReceiver);
+            GimickManager.FoceSwichMethod(10.5f);
         }
     }
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4549009757055561088}
   - component: {fileID: 4549009757055561089}
   m_Layer: 0
-  m_Name: FoceSwich
+  m_Name: Swich
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,8 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88fce808ca7c5469d893cfd42e3d7410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FlgRight: 0
-  force: 5
+  force: 0
+  ForceOn: 0
+  ForceFlgRight: 0
+  OpenOn: 0
+  OpenObj: {fileID: 0}
+  twinSwich: {fileID: 0}
+  twinSwichOn: 0
+  timeWait: 0.2
 --- !u!114 &4549009757055561088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,6 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FlgPlayerStay: 0
+  FlgFoceObjStay: 0
   OtherObj: {fileID: 0}
 --- !u!61 &4549009757055561089
 BoxCollider2D:
