@@ -192,35 +192,35 @@ public class PlayerController : MonoBehaviour
 			switch (state) {
 				case "JUMP":
 					anim.SetBool ("run_flag", false);
-					anim.SetBool ("walk_flag", false);
+					anim.SetBool ("dash_flag", false);
 					anim.SetBool ("jump_up_flag", true);
 					anim.SetBool ("jump_down_flag", false);
 					anim.SetBool ("rolling_flag", false);
 					break;
 				case "FALL":
 					anim.SetBool ("run_flag", false);
-					anim.SetBool ("walk_flag", false);
+					anim.SetBool ("dash_flag", false);
 					anim.SetBool ("jump_up_flag", false);
 					anim.SetBool ("jump_down_flag", true);
 					anim.SetBool ("rolling_flag", false);
 					break;
 				case "RUN":
 					anim.SetBool ("run_flag", true);
-					anim.SetBool ("walk_flag", false);
+					anim.SetBool ("dash_flag", false);
 					anim.SetBool ("jump_up_flag", false);
 					anim.SetBool ("jump_down_flag", false);
 					anim.SetBool ("rolling_flag", false);
 					break;
 				case "DASH":
 					anim.SetBool ("run_flag", false);
-					anim.SetBool ("walk_flag", true);
+					anim.SetBool ("dash_flag", true);
 					anim.SetBool ("jump_up_flag", false);
 					anim.SetBool ("jump_down_flag", false);
 					anim.SetBool ("rolling_flag", false);
 					break;
 				case "ROLLING":
 					anim.SetBool ("run_flag", false);
-					anim.SetBool ("walk_flag", false);
+					anim.SetBool ("dash_flag", false);
 					anim.SetBool ("jump_up_flag", false);
 					anim.SetBool ("jump_down_flag", false);
 					anim.SetBool ("rolling_flag", true);
@@ -229,7 +229,7 @@ public class PlayerController : MonoBehaviour
 					// 攻撃モーションが追加されたらここに
 				default:
 					anim.SetBool ("run_flag", false);
-					anim.SetBool ("walk_flag", false);
+					anim.SetBool ("dash_flag", false);
 					anim.SetBool ("jump_up_flag", false);
 					anim.SetBool ("jump_down_flag", false);
 					anim.SetBool ("rolling_flag", false);
