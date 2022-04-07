@@ -12,7 +12,7 @@ public class GimickManager : MonoBehaviour
     private GameObject[] FoceObjs;
     // Start is called before the first frame update
     void Start(){
-        FoceObjs = GameObject.FindGameObjectsWithTag("ForceObj");
+        GenelateObject();
         Open = false;
         cooltime = false;
     }
@@ -49,5 +49,8 @@ public class GimickManager : MonoBehaviour
         timer = 0;
         // 2回呼び出し防止
         cooltime = false;
+    }
+    public void GenelateObject(){
+        FoceObjs = GameObject.FindGameObjectsWithTag("ForceObj");
     }
 }

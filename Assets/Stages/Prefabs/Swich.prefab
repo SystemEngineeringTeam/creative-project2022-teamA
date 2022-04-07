@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88fce808ca7c5469d893cfd42e3d7410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  foceObjList: []
   force: 0
   ForceOn: 0
   ForceFlgRight: 0
@@ -54,6 +55,7 @@ MonoBehaviour:
   twinSwich: {fileID: 0}
   twinSwichOn: 0
   timeWait: 0.2
+  key: {fileID: 11400000, guid: 4ba684b94873fb54d9cf58b66007c360, type: 2}
 --- !u!114 &4549009757055561088
 MonoBehaviour:
   m_ObjectHideFlags: 0

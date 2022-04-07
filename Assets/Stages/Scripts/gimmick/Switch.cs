@@ -25,6 +25,7 @@ public class Switch : MonoBehaviour
     private GameObject GimickManagerObj;
     private float timer;
     private bool FlgTime, Flg;
+    public KeyConfig key;
 
     // Start is called before the first frame update
     void Start()
@@ -56,6 +57,7 @@ public class Switch : MonoBehaviour
             return;
 // 押してる処理
 #region
+        SwichOn = false;
         if (GetComponent<PlayerIn>().FlgPlayerStay || GetComponent<PlayerIn>().FlgFoceObjStay)
         {
             Flg = true;
@@ -82,22 +84,17 @@ public class Switch : MonoBehaviour
 
         if (OperationPossible && Flg)
         {
-            child.transform.localScale = smallSize;
-            OperationPossible = false;
-            SwichOn = true;
-            // 二つ押しの処理
-            if(twinSwich != null){
-                if(twinSwich.GetComponent<Switch>().twinSwich == null) Debug.Log("相手のオブジェクトが指定されてないよ");
-                if(!twinSwich.GetComponent<Switch>().twinSwichOn){
-                    SwichOn = false;
-                    // Debug.Log("ダメだった");
-                }
-                // Debug.Log("ダブルボタン");
-            }
+            OnSwich();
         }
         else
         {
             SwichOn = false;
+        }
+        if(Flg){
+            if(key.action.Down()){
+                OnSwich();
+                // Debug.Log("key押してる");
+            }
         }
 #endregion
 // Foceの処理
@@ -126,5 +123,19 @@ public class Switch : MonoBehaviour
             }
         }
 #endregion
+    }
+    void OnSwich(){
+            child.transform.localScale = smallSize;
+            OperationPossible = false;
+            SwichOn = true;
+            // 二つ押しの処理
+            if(twinSwich != null){
+                if(twinSwich.GetComponent<Switch>().twinSwich == null) Debug.Log("相手のオブジェクトが指定されてないよ");
+                if(!twinSwich.GetComponent<Switch>().twinSwichOn){
+                    SwichOn = false;
+                    // Debug.Log("ダメだった");
+                }
+                // Debug.Log("ダブルボタン");
+            }
     }
 }
