@@ -5,6 +5,8 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - keyConfig: {fileID: 11400000, guid: 4ba684b94873fb54d9cf58b66007c360, type: 2}
+  - PhNof: {fileID: 6200000, guid: bff24a0846556004cba3ef0e3efb6c5b, type: 2}
+  - PhMaxf: {fileID: 6200000, guid: a06384b9aeba0413eb93ac07c92c3c18, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -152,6 +152,8 @@ MonoBehaviour:
   keepJumpFroce: 40
   jumpMaxTime: 0.5
   jumpCoolTime: 0.2
+  PhNof: {fileID: 6200000, guid: bff24a0846556004cba3ef0e3efb6c5b, type: 2}
+  PhMaxf: {fileID: 6200000, guid: a06384b9aeba0413eb93ac07c92c3c18, type: 2}
   groundsCnt:
     up: 0
     down: 0
