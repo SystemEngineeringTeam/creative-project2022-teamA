@@ -364,4 +364,8 @@ public class PlayerController : MonoBehaviour
 		}
 		// Debug.Log("false!");
 	}
+
+	void attack(){
+		
+	}
 }
