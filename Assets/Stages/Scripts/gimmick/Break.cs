@@ -12,7 +12,7 @@ public class Break : MonoBehaviour
     // Update is called once per frame
     public void DamageWall(int loss) {
         hp -= loss;
-        //パーティクル用ゲームオブジェクト生成
+        //パーティクル生成
         Instantiate(efectA, this.transform.position, Quaternion.identity);
         Debug.Log("壁"+loss+"のダメージ");
         if (hp <= 0) {

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine.Events;
+using UnityEngine;
 
 #region DictionaryItem
     [System.Serializable]
@@ -44,6 +45,22 @@ using UnityEngine.Events;
     public class TableEventPair : Serialize.KeyAndValue<string, UnityEvent>{
 
         public TableEventPair (string key, UnityEvent value) : base (key, value) {
+
+        }
+    }
+#endregion
+
+#region DictionaryPoint
+    [System.Serializable]
+    public class TablePoint: Serialize.TableBase<string, Vector3,TablePointPair>
+    {
+        
+    }
+
+    [System.Serializable]
+    public class TablePointPair : Serialize.KeyAndValue<string, Vector3>{
+
+        public TablePointPair (string key, Vector3 value) : base (key, value) {
 
         }
     }

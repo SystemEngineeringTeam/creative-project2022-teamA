@@ -2,26 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveSceanStage : MonoBehaviour
+public class ShelterToStage : MonoBehaviour
 {
     public KeyConfig key;
     public string scene;
     private Vector3 position;
-    public int x = 0;
-    public int y = 0;
-    public int z = 0;
     private bool OnMoveShelter;
     GameObject GameManager;
+    public TablePoint tablePoint = new TablePoint();
     private void Start() {
         OnMoveShelter=false;
         GameManager = GameObject.FindGameObjectWithTag("GameManager");
-        position = new Vector3(x, y, z);
+        position = GameManager.GetComponent<ActionManager>().lastTransitionPosition;
+        position.y = position.y + 1.0f;
+        scene = GameManager.GetComponent<ActionManager>().beforeSceneName;
     }
     //主人公が触れてキー入力をしたら
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.tag=="Player"){
             OnMoveShelter=true;
-            Debug.Log("シェルターへ移動できるよ");
+            Debug.Log("ステージへ移動できるよ");
         }
     }
     private void OnTriggerExit2D(Collider2D other) {
@@ -34,7 +34,7 @@ public class MoveSceanStage : MonoBehaviour
         if(OnMoveShelter){
             if(key.action.Down()){
                 Debug.Log("移動するよ");
-                GameManager.GetComponent<ActionManager>().TransitionScene(scene,position);
+                GameManager.GetComponent<ActionManager>().TransitionScene(scene,tablePoint.GetTable()[scene]);
             }
         }
     }
