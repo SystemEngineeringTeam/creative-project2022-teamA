@@ -69,7 +69,6 @@ GameObject:
   - component: {fileID: 2221873315289860951}
   - component: {fileID: 2221873315289860944}
   - component: {fileID: 2221873315289860950}
-  - component: {fileID: 4495670338766566448}
   m_Layer: 0
   m_Name: BreakObj
   m_TagString: Ground
@@ -182,21 +181,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 3
-  efectA: {fileID: 7941379403104542800, guid: 71c79ea95fcd54422a39c67e853ce08e, type: 3}
-  efectB: {fileID: 79065409502823352, guid: 32621d8a1adf34845b6160db18b0e5ef, type: 3}
---- !u!114 &4495670338766566448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2221873315289860946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e60514a55ba1a7a448e6388cc2ab639a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 0
   mp: 0
   status: {fileID: 11400000, guid: e4bcef179019acf46a984d1790adcfc9, type: 2}
   HandedItem: {fileID: 0}
+  hp: 3
+  efectA: {fileID: 7941379403104542800, guid: 71c79ea95fcd54422a39c67e853ce08e, type: 3}
+  efectB: {fileID: 79065409502823352, guid: 32621d8a1adf34845b6160db18b0e5ef, type: 3}
