@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerBehaviour : MobBehaviour
 {
-    // void OnDied(){
-    //     hp = status.hp;
-    // }
+    public override void OnDied(){
+        // 死亡時アクション
+        hp=status.hp;
+    }
 }
