@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public GroundCheck ground; 			// 接地判定
 	public WallJump wall; 				// 壁ジャンプ判定
 	public KeyConfig keyConfig; 		// キーコンフィグ
+	public GameObject attackBox;        //AttackBox
 
 	[Header("移動値")]
     public float jumpForce = 680f;       // ジャンプ時に加える力
@@ -50,6 +51,7 @@ public class PlayerController : MonoBehaviour
 	private int tmp = 0;
 	private float speed = 0.0f;   //移動スピードを代入する（歩きか走りのスピードを代入）
 	private bool wallJumpFlag = false;  // 壁ジャンの慣性を保つため
+	private bool normalAttackFlag = false;    //通常攻撃のフラグ
 
 
 
@@ -64,6 +66,7 @@ public class PlayerController : MonoBehaviour
 
     // Update
 	void Update(){
+		GetInputKey();
 		// keyの押下(特にKeyDown)はUpdateで判定(FixedUpdateでは絶対に行ってはいけない。)
 		if(dashTimer_flag){
 			dashTimer += Time.deltaTime;
@@ -76,8 +79,6 @@ public class PlayerController : MonoBehaviour
 		}else if(keyConfig.jump.Up()){
 			jumpKeyUp = true;
 		}
-
-		
 
 		if (keyConfig.right.Up()){
 			dashTimer_flag = true;
@@ -102,22 +103,9 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-
-    void FixedUpdate(){
-		if(!runFlag){
-			// 空中ダッシュをしたときに重力を無くす
-			rb.velocity = new Vector2(rb.velocity.x,0);
-			Debug.Log("無重力中だよ");
-		}
-		GetInputKey ();
-		ChangeState();
-		ChangeAnimation();
-		Move();
-    }
-
 	void GetInputKey(){
 		key = 0;
-		if (keyConfig.right.Stay()){
+		if (keyConfig.right.Down() || keyConfig.right.Stay()){
 			key = 1;
 			if(tmp == key){
 				if(dashTimer > 0 && dashTimer < 0.2){
@@ -141,7 +129,23 @@ public class PlayerController : MonoBehaviour
 				dashTimer = 0.0f;
 			}
 		}
+		if(keyConfig.attack.Down()){
+            attackBox.gameObject.SetActive(true);
+			normalAttackFlag = true;
+        }
 	}
+
+
+    void FixedUpdate(){
+		if(!runFlag){
+			// 空中ダッシュをしたときに重力を無くす
+			rb.velocity = new Vector2(rb.velocity.x,0);
+			// Debug.Log("無重力中だよ");
+		}
+		ChangeState();
+		ChangeAnimation();
+		Move();
+    }
 
     void ChangeState(){
 		// 接地判定受け取り
@@ -182,7 +186,10 @@ public class PlayerController : MonoBehaviour
 		}
 		if(dashFlag){
 			state = "DASH";
+		}else if(normalAttackFlag){
+			state = "ATTACK";
 		}
+
 
 	}
 
@@ -196,6 +203,7 @@ public class PlayerController : MonoBehaviour
 					anim.SetBool ("jump_up_flag", true);
 					anim.SetBool ("jump_down_flag", false);
 					anim.SetBool ("rolling_flag", false);
+					anim.SetBool ("attack_normal_flag", false);
 					break;
 				case "FALL":
 					anim.SetBool ("run_flag", false);
@@ -203,6 +211,7 @@ public class PlayerController : MonoBehaviour
 					anim.SetBool ("jump_up_flag", false);
 					anim.SetBool ("jump_down_flag", true);
 					anim.SetBool ("rolling_flag", false);
+					anim.SetBool ("attack_normal_flag", false);
 					break;
 				case "RUN":
 					anim.SetBool ("run_flag", true);
@@ -210,6 +219,7 @@ public class PlayerController : MonoBehaviour
 					anim.SetBool ("jump_up_flag", false);
 					anim.SetBool ("jump_down_flag", false);
 					anim.SetBool ("rolling_flag", false);
+					anim.SetBool ("attack_normal_flag", false);
 					break;
 				case "DASH":
 					anim.SetBool ("run_flag", false);
@@ -217,6 +227,7 @@ public class PlayerController : MonoBehaviour
 					anim.SetBool ("jump_up_flag", false);
 					anim.SetBool ("jump_down_flag", false);
 					anim.SetBool ("rolling_flag", false);
+					anim.SetBool ("attack_normal_flag", false);
 					break;
 				case "ROLLING":
 					anim.SetBool ("run_flag", false);
@@ -224,15 +235,24 @@ public class PlayerController : MonoBehaviour
 					anim.SetBool ("jump_up_flag", false);
 					anim.SetBool ("jump_down_flag", false);
 					anim.SetBool ("rolling_flag", true);
+					anim.SetBool ("attack_normal_flag", false);
 					break;
 				case "ATTACK":
-					// 攻撃モーションが追加されたらここに
+					anim.SetBool ("run_flag", false);
+					anim.SetBool ("dash_flag", false);
+					anim.SetBool ("jump_up_flag", false);
+					anim.SetBool ("jump_down_flag", false);
+					anim.SetBool ("rolling_flag", false);
+					anim.SetBool ("attack_normal_flag", true);
+					Debug.Log("AnimAttack");
+					break;
 				default:
 					anim.SetBool ("run_flag", false);
 					anim.SetBool ("dash_flag", false);
 					anim.SetBool ("jump_up_flag", false);
 					anim.SetBool ("jump_down_flag", false);
 					anim.SetBool ("rolling_flag", false);
+					anim.SetBool ("attack_normal_flag", false);
 					break;
 			}
 			// 状態の変更を判定するために状態を保存しておく
@@ -242,10 +262,14 @@ public class PlayerController : MonoBehaviour
 
     void Move(){
 		// ダッシュが可能状態である　かつ　ダッシュ中ではない　かつ　入力方向とプレイヤーの向きが同じ場合
-		if(canDashFlag && !dashFlag && key == transform.localScale.x){
+		if(canDashFlag && !dashFlag && key == transform.localScale.x && key == tmp){
 			Dash();
 		}else{
 			speed = runSpeed;
+		}
+
+		if(anim.GetBool("attack_normal_flag")){
+			attackBox.gameObject.SetActive(false);
 		}
 		
 		if(runFlag){
