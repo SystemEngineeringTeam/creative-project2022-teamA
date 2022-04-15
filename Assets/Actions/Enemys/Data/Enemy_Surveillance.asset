@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e3642fc956b3734e93e599fb596c1c0, type: 3}
+  m_Name: Enemy_Surveillance
+  m_EditorClassIdentifier: 
+  objectName: Enemy_Surveillance
+  objectID: Enemy_Surveillance
+  objectPrefab: {fileID: 1322894404470769674, guid: 77640c896bf57475f90d2707874531d6, type: 3}
+  lv: 1
+  hp: 10
+  mp: 1
+  ofence: 1
+  defaultAttr: 0
+  abilityDamages:
+    list:
+    - Key: "\u901A\u5E38\u653B\u6483"
+      Value: 1
+  defenceList:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
