@@ -130,7 +130,6 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 		if(keyConfig.attack.Down()){
-            attackBox.gameObject.SetActive(true);
 			normalAttackFlag = true;
         }
 	}
@@ -140,7 +139,6 @@ public class PlayerController : MonoBehaviour
 		if(!runFlag){
 			// 空中ダッシュをしたときに重力を無くす
 			rb.velocity = new Vector2(rb.velocity.x,0);
-			// Debug.Log("無重力中だよ");
 		}
 		ChangeState();
 		ChangeAnimation();
@@ -195,7 +193,7 @@ public class PlayerController : MonoBehaviour
 
     void ChangeAnimation(){
         if (prevState != state) {
-			// Debug.Log(state);
+			Debug.Log(state);
 			switch (state) {
 				case "JUMP":
 					anim.SetBool ("run_flag", false);
@@ -268,11 +266,9 @@ public class PlayerController : MonoBehaviour
 			speed = runSpeed;
 		}
 
-		if(anim.GetBool("attack_normal_flag")){
-			attackBox.gameObject.SetActive(false);
-		}
-		
-		if(runFlag){
+		if(normalAttackFlag && isGround){
+			NormalAttack();
+		}else if(runFlag){
 
 			if(isGround){
 				// 接地してる時に連続ダッシュを可能に
@@ -377,6 +373,19 @@ public class PlayerController : MonoBehaviour
 		// Debug.Log("Dash中だよ！");
 	}
 
+	void NormalAttack(){
+		rb.velocity = new Vector2(0,0);
+		attackBox.gameObject.SetActive(true);
+	}
+	
+	void AttackAnimationCompleted(){
+		attackBox.gameObject.SetActive(false);
+		if(anim.GetBool("attack_normal_flag")){
+			anim.SetBool("attack_normal_flag",false);
+		}
+		normalAttackFlag = false;
+	}
+
 	void runFlagToTrue(){
 		// 通常の移動モーションに遷移可能
 		runFlag = true;
@@ -389,7 +398,4 @@ public class PlayerController : MonoBehaviour
 		// Debug.Log("false!");
 	}
 
-	void attack(){
-		
-	}
 }

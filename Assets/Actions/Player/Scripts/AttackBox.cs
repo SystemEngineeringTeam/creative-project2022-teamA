@@ -19,7 +19,6 @@ public class AttackBox : MonoBehaviour
                 
             }else if((otherMob=other.GetComponentInParent<MobBehaviour>())!=null){
                 mob.attackToOther(otherMob,"通常攻撃");
-                Debug.Log("a");
 
                 // 攻撃種類による当たり判定の変形処理
                 // attackBoxCollider.size = new Vector2(1,1);
