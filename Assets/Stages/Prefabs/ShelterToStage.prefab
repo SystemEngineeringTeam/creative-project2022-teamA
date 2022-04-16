@@ -124,8 +124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: {fileID: 0}
   scene: 
-  x: 0
-  y: 0
-  z: 0
   tablePoint:
-    list: []
+    list:
+    - Key: stage1
+      Value: {x: 99, y: 13, z: 0}
