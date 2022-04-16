@@ -23,12 +23,8 @@ public class MobBehaviour : MonoBehaviour
             OnDied();
         }
     }
-    public virtual void OnDied(){
-        Destroy(gameObject);
-    }
-
-
     void LateUpdate(){
+        // attackToOtherによって他から与えられたattackEventを一括で処理する
         foreach (AttackEvent attackEvent in attackEvents)
         {
             attackEvent.processEvent(this);
@@ -36,6 +32,17 @@ public class MobBehaviour : MonoBehaviour
         attackEvents.Clear();
     }
 
+    // 攻撃を受けたときのコールバック関数.オーバーライドして使ってほしいやつ
+    public virtual void OnDamaged(){
+
+    }
+
+    // 体力が0になったときの関数.オーバーライドして使ってほしいやつ
+    public virtual void OnDied(){
+        Destroy(gameObject);
+    }
+
+    // 攻撃を行う時に外部スクリプトからこの関数を実行する
     public virtual void attackToOther(GameObject mob,string ability){
         MobBehaviour mobB;
         if(mob.TryGetComponent<MobBehaviour>(out mobB)){
@@ -45,9 +52,13 @@ public class MobBehaviour : MonoBehaviour
         }
         
     }
+
+    // 攻撃を行う時に外部スクリプトからこの関数を実行する
     public virtual void attackToOther(MobBehaviour mob,string ability){
         AttackEvent attackEvent=new AttackEvent(this,mob,ability);
 
         mob.attackEvents.Add(attackEvent);
     }
+    
+
 }

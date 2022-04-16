@@ -39,6 +39,7 @@ public class AttackEvent
         float damage = damageCalc();
         Debug.Log("ダメージ："+damage);
         attackTo.hp-=damage;
+        attackTo.OnDamaged();
     }
     public static float damageCalc(float ofence,float addOfence,List<float> ofenceBuff,float defence,float addDefence,List<float> defenceBuff,float abilityPower,float fromLevel){
         float oBuffSum=1;
