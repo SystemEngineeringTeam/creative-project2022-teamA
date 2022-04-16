@@ -192,6 +192,7 @@ public class PlayerController : MonoBehaviour
 	}
 
     void ChangeAnimation(){
+		Debug.Log(anim.GetBool ("run_flag")+":"+anim.GetBool ("dash_flag")+":"+anim.GetBool("jump_up_flag")+":"+anim.GetBool ("jump_down_flag")+":"+anim.GetBool ("attack_normal_flag"));
         if (prevState != state) {
 			Debug.Log(state);
 			switch (state) {
@@ -395,7 +396,5 @@ public class PlayerController : MonoBehaviour
 			// 地面にいる場合のみdashFlagを戻している
 			dashFlag = false;
 		}
-		// Debug.Log("false!");
 	}
-
 }
