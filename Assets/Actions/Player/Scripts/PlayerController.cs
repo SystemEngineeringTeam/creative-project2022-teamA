@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
 	private float speed = 0.0f;   //移動スピードを代入する（歩きか走りのスピードを代入）
 	private bool wallJumpFlag = false;  // 壁ジャンの慣性を保つため
 	private bool normalAttackFlag = false;    //通常攻撃のフラグ
+	private bool canInputKeyFlag = true;  //キー入力を受け付けるフラグ
 
 
 
@@ -66,28 +67,13 @@ public class PlayerController : MonoBehaviour
 
     // Update
 	void Update(){
-		GetInputKey();
-		// keyの押下(特にKeyDown)はUpdateで判定(FixedUpdateでは絶対に行ってはいけない。)
+		if(canInputKeyFlag){
+			GetInputKey();
+			// keyの押下(特にKeyDown)はUpdateで判定(FixedUpdateでは絶対に行ってはいけない。)
+		}
+
 		if(dashTimer_flag){
 			dashTimer += Time.deltaTime;
-		}
-
-		if(keyConfig.jump.Down()){
-			jumpKeyDown = true;
-		}else if(keyConfig.jump.Stay()){
-			jumpKey = true;
-		}else if(keyConfig.jump.Up()){
-			jumpKeyUp = true;
-		}
-
-		if (keyConfig.right.Up()){
-			dashTimer_flag = true;
-			// canDashFlag = false;
-			tmp = 1;
-		}else if(keyConfig.left.Up()){
-			dashTimer_flag = true;
-			// canDashFlag = false;
-			tmp = -1;
 		}
 
 		if(!keyConfig.right.Stay()&&!keyConfig.left.Stay()){
@@ -129,9 +115,29 @@ public class PlayerController : MonoBehaviour
 				dashTimer = 0.0f;
 			}
 		}
+
 		if(keyConfig.attack.Down()){
 			normalAttackFlag = true;
         }
+
+		if(keyConfig.jump.Down()){
+			jumpKeyDown = true;
+		}else if(keyConfig.jump.Stay()){
+			jumpKey = true;
+		}else if(keyConfig.jump.Up()){
+			jumpKeyUp = true;
+		}
+
+		if (keyConfig.right.Up()){
+			dashTimer_flag = true;
+			// canDashFlag = false;
+			tmp = 1;
+		}else if(keyConfig.left.Up()){
+			dashTimer_flag = true;
+			// canDashFlag = false;
+			tmp = -1;
+		}
+
 	}
 
 
@@ -360,7 +366,7 @@ public class PlayerController : MonoBehaviour
 
 	void Rolling(){
 		// f(x) = -40(x-0.5)^2 + 10 
-		runFlag = false;
+		// runFlag = false;
 
 	}
 
@@ -375,11 +381,15 @@ public class PlayerController : MonoBehaviour
 	}
 
 	void NormalAttack(){
+		canInputKeyFlag = false;
+		runFlag = false;
 		rb.velocity = new Vector2(0,0);
 		attackBox.gameObject.SetActive(true);
 	}
 	
 	void AttackAnimationCompleted(){
+		canInputKeyFlag = true;
+		runFlag = true;
 		attackBox.gameObject.SetActive(false);
 		if(anim.GetBool("attack_normal_flag")){
 			anim.SetBool("attack_normal_flag",false);
