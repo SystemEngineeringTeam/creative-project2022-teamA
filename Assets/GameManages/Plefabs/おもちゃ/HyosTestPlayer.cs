@@ -23,6 +23,8 @@ public class HyosTestPlayer : MonoBehaviour
     bool isFirstJump=false; // 大小ジャンプ区別のためのフラグ
 
     [Header("地面判定関連")]
+    public PhysicsMaterial2D PhNof;
+    public PhysicsMaterial2D PhMaxf;
     
     public GroundsCounter groundsCnt = new GroundsCounter(); // 上下左右の接地数
     [System.Serializable]
@@ -48,7 +50,7 @@ public class HyosTestPlayer : MonoBehaviour
     Vector2 horizonDirection,verticalDirection; // プレイヤーの水平垂直方向
     float horizontalSpeed,verticalSpeed; // プレイヤーの水平垂直方向の速度
     bool wallSideRight=false;
-    
+    bool isMove=false;
     public List<float> coolTimes=new List<float>();
     public List<float> nowCoolTimes= new List<float>();
     public List<Collider2D> attackTriggers=new List<Collider2D>();
@@ -105,7 +107,7 @@ public class HyosTestPlayer : MonoBehaviour
                 }
             }
         }
-        bool isMove = (horizontalMove!=0);
+        isMove = (horizontalMove!=0);
         
         // ジャンプ操作
         if(!isJump){
@@ -204,6 +206,11 @@ public class HyosTestPlayer : MonoBehaviour
 
 // 固定fps物理演算後の処理(コルーチンにより実装)
     void AfterFixedUpdate(){
+        if(groundsCnt.down>0&&!isMove){
+            boxCol.sharedMaterial=PhMaxf;
+        }else{
+            boxCol.sharedMaterial=PhNof;
+        }
         // フラグ関連
         canJump = ((groundsCnt.down>0||(isWallStick&&wallJump))&&jumpMaxTime-jumpTime>=jumpCoolTime);
         if(canJump){
