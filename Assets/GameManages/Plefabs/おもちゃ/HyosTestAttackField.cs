@@ -16,6 +16,7 @@ public class HyosTestAttackField : MonoBehaviour
                 
             }else if((otherMob=other.GetComponentInParent<MobBehaviour>())!=null){
                 mob.attackToOther(otherMob,"通常攻撃");
+                Debug.Log("AAA");
             }
             
         }

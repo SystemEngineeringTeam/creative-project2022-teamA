@@ -74,6 +74,7 @@ public class HyosTestPlayer : MonoBehaviour
 // 変動fpsの毎フレーム処理
     void Update()
     {
+        Debug.Log(boxCol.sharedMaterial.name);
     // キーコンフィグをテストした
         // Debug.Log(keyConfig.up.Up()+":"+keyConfig.up.Stay()+":"+keyConfig.up.Down()+":"+keyConfig.up.All()+":"+keyConfig.up.AllDown());
     // 準備
