@@ -116,7 +116,9 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-		if(keyConfig.attack.Down()){
+		if(keyConfig.attack.Down() && isGround && !anim.GetBool("jump_up_flag") && !anim.GetBool("jump_down_flag") ){
+			// 通常攻撃キーを押下時　かつ　地面に接地しているとき　かつ　ジャンプ関連のアニメーションフラグが全てフォルスの時に
+			// このフラグを立てる
 			normalAttackFlag = true;
         }
 
@@ -198,7 +200,7 @@ public class PlayerController : MonoBehaviour
 	}
 
     void ChangeAnimation(){
-		Debug.Log(anim.GetBool ("run_flag")+":"+anim.GetBool ("dash_flag")+":"+anim.GetBool("jump_up_flag")+":"+anim.GetBool ("jump_down_flag")+":"+anim.GetBool ("attack_normal_flag"));
+		// Debug.Log(anim.GetBool ("run_flag")+":"+anim.GetBool ("dash_flag")+":"+anim.GetBool("jump_up_flag")+":"+anim.GetBool ("jump_down_flag")+":"+anim.GetBool ("attack_normal_flag"));
         if (prevState != state) {
 			Debug.Log(state);
 			switch (state) {
@@ -273,7 +275,7 @@ public class PlayerController : MonoBehaviour
 			speed = runSpeed;
 		}
 
-		if(normalAttackFlag && isGround){
+		if(normalAttackFlag){
 			NormalAttack();
 		}else if(runFlag){
 
