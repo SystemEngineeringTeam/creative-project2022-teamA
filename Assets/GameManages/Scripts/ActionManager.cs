@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Cinemachine;
 public class ActionManager : MonoBehaviour
@@ -17,12 +18,15 @@ public class ActionManager : MonoBehaviour
     string activeSceneNameBef;
     public string beforeSceneName; // 前回入っていたシーンの名前
     public Vector3 lastTransitionPosition; // 前回入っていたシーンでの座標
-    GameObject playerObject;
     public List<Scene> LoadedScenes=new List<Scene>();
 
     [Header("メニュー関連")]
-    bool isMenu=false;
     public Canvas Menu = new Canvas();
+    bool isMenu=false;
+    public Slider hpBar;
+
+    // その他
+    GameObject playerObject;
 
     void Start()
     {
@@ -46,6 +50,10 @@ public class ActionManager : MonoBehaviour
         if(string.Compare(activeSceneNameBef,activeSceneName)!=0){
             activeSceneNameBef=activeSceneName;
             TransitionScene(activeSceneName,Vector3.zero);
+        }
+        if(hpBar!=null){
+            MobBehaviour playerBv = playerObject.GetComponent<MobBehaviour>();
+            hpBar.value = playerBv.hp/playerBv.status.hp;
         }
     }
 
