@@ -64,6 +64,27 @@ public class ActionManager : MonoBehaviour
         playerObject=Instantiate(plafab);
     }
 
+    public void ExitActionGame(){
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
+    }
+    public void ReloadPlayer(){
+        if (playerPlefab!=null)
+        {
+            Destroy(playerObject);
+            playerObject=Instantiate(playerPlefab);
+            virtualCamera.Follow=playerObject.transform;
+        }
+    }
+    public void ResetActionGame(){
+        setMenu(false);
+        ReloadPlayer();
+        TransitionScene("stage1",new Vector3(0,1,0));
+    }
+
     #region SceneFunctions
     public void TransitionScene(string sceneName, Vector3 playerPosition){
         StartCoroutine(CoroutineTsScene(sceneName,playerPosition));
