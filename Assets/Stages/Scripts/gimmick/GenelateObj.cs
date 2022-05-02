@@ -29,14 +29,14 @@ public class GenelateObj : MonoBehaviour
         GimickManagerObj.GetComponent<GimickManager>().GenelateObject();
 
         if(Object.tag == "ForceObj"){
-            // Debug.Log("なでこダヨォ");
+
             boxes = new GameObject[ Object.transform.childCount ];
             for(int i=0;Object.transform.childCount>i;i++){
                 if(Object.transform.GetChild(i).gameObject.TryGetComponent(out Light2D Light)){
                     Light.pointLightOuterRadius = size.x;
-                    // Debug.Log("かえたヨォ");
+
                 }else{
-                    // Debug.Log("違ったヨ");
+
                 };
             }
         }
