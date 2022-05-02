@@ -19180,5 +19180,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShelterToStage
       objectReference: {fileID: 0}
+    - target: {fileID: 8074858005094166130, guid: 55c4e77255a0b4f00986a7f22ce73eeb, type: 3}
+      propertyPath: key
+      value: 
+      objectReference: {fileID: 11400000, guid: 4ba684b94873fb54d9cf58b66007c360, type: 2}
+    - target: {fileID: 8074858005094166130, guid: 55c4e77255a0b4f00986a7f22ce73eeb, type: 3}
+      propertyPath: tablePoint.list.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8074858005094166130, guid: 55c4e77255a0b4f00986a7f22ce73eeb, type: 3}
+      propertyPath: tablePoint.list.Array.data[1].Key
+      value: stage3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8074858005094166130, guid: 55c4e77255a0b4f00986a7f22ce73eeb, type: 3}
+      propertyPath: tablePoint.list.Array.data[1].Value.x
+      value: -172
+      objectReference: {fileID: 0}
+    - target: {fileID: 8074858005094166130, guid: 55c4e77255a0b4f00986a7f22ce73eeb, type: 3}
+      propertyPath: tablePoint.list.Array.data[1].Value.y
+      value: 3.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55c4e77255a0b4f00986a7f22ce73eeb, type: 3}
