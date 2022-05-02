@@ -3,7 +3,13 @@ guid: e685c998587823341a5579c0509225a8
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - playerPlefab: {fileID: 4199113931456873370, guid: 0be684450363ec049bf447cb13a96c52, type: 3}
+  - blightPlefab: {fileID: 3683015617654302361, guid: cbdf7c081d5508e4591e0112e592740b, type: 3}
+  - CameraTransform: {instanceID: 0}
+  - virtualCamera: {instanceID: 0}
+  - Menu: {instanceID: 0}
+  - hpBar: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

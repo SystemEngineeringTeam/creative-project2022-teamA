@@ -781,6 +781,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPlefab: {fileID: 967901523668226395, guid: 1f839ec477f3444449de78886c846288, type: 3}
+  blightPlefab: {fileID: 3683015617654302361, guid: cbdf7c081d5508e4591e0112e592740b, type: 3}
   CameraTransform: {fileID: 1461324793}
   virtualCamera: {fileID: 2081462297}
   activeSceneName: stage1

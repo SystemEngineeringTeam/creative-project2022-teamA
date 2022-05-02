@@ -8,6 +8,10 @@ public class ActionManager : MonoBehaviour
 {
     [Header("プレイヤー関連")]
     public GameObject  playerPlefab;
+    public GameObject  blightPlefab;
+    
+    GameObject playerObject;
+    GameObject blightObject;
 
     [Header("カメラ設定")]
     public Transform CameraTransform;
@@ -25,8 +29,6 @@ public class ActionManager : MonoBehaviour
     bool isMenu=false;
     public Slider hpBar;
 
-    // その他
-    GameObject playerObject;
 
     void Start()
     {
@@ -38,6 +40,10 @@ public class ActionManager : MonoBehaviour
             
         }else{
             playerObject=Instantiate(playerPlefab);
+        }
+        if(blightPlefab!=null){
+            blightObject = Instantiate(blightPlefab);
+            blightObject.transform.SetParent(playerObject.transform);
         }
         virtualCamera.Follow=playerObject.transform;
     }
@@ -77,6 +83,10 @@ public class ActionManager : MonoBehaviour
             Destroy(playerObject);
             playerObject=Instantiate(playerPlefab);
             virtualCamera.Follow=playerObject.transform;
+            if(blightPlefab!=null){
+                blightObject = Instantiate(blightPlefab);
+                blightObject.transform.SetParent(playerObject.transform);
+            }
         }
     }
     public void ResetActionGame(){
