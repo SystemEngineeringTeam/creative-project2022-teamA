@@ -150,7 +150,7 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -177,7 +177,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 178762994}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 117.5, y: 21, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -19179,6 +19179,26 @@ PrefabInstance:
     - target: {fileID: 3698995420326952101, guid: 55c4e77255a0b4f00986a7f22ce73eeb, type: 3}
       propertyPath: m_Name
       value: ShelterToStage
+      objectReference: {fileID: 0}
+    - target: {fileID: 8074858005094166130, guid: 55c4e77255a0b4f00986a7f22ce73eeb, type: 3}
+      propertyPath: key
+      value: 
+      objectReference: {fileID: 11400000, guid: 4ba684b94873fb54d9cf58b66007c360, type: 2}
+    - target: {fileID: 8074858005094166130, guid: 55c4e77255a0b4f00986a7f22ce73eeb, type: 3}
+      propertyPath: tablePoint.list.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8074858005094166130, guid: 55c4e77255a0b4f00986a7f22ce73eeb, type: 3}
+      propertyPath: tablePoint.list.Array.data[1].Key
+      value: stage3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8074858005094166130, guid: 55c4e77255a0b4f00986a7f22ce73eeb, type: 3}
+      propertyPath: tablePoint.list.Array.data[1].Value.x
+      value: -172
+      objectReference: {fileID: 0}
+    - target: {fileID: 8074858005094166130, guid: 55c4e77255a0b4f00986a7f22ce73eeb, type: 3}
+      propertyPath: tablePoint.list.Array.data[1].Value.y
+      value: 3.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55c4e77255a0b4f00986a7f22ce73eeb, type: 3}
